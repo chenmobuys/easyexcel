@@ -12,7 +12,7 @@ class AutoFilter
     /**
      * Constructor.
      *
-     * @param string $range
+     * @param  string  $range
      */
     public function __construct(string $range = '')
     {
@@ -28,7 +28,7 @@ class AutoFilter
     }
 
     /**
-     * @param string $range
+     * @param  string  $range
      */
     public function setRange(string $range): void
     {

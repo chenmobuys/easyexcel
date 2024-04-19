@@ -45,13 +45,26 @@ class Border
     /**
      * @return string
      */
+    public function getHashCode(): string
+    {
+        return md5(
+            __CLASS__.
+            $this->getStyle().
+            $this->getColor()->getHashCode()
+        );
+    }
+
+    /**
+     * @return string
+     */
     public function getStyle(): string
     {
         return $this->style;
     }
 
     /**
-     * @param string $style
+     * @param  string  $style
+     *
      * @return $this
      */
     public function setStyle(string $style): self
@@ -70,7 +83,8 @@ class Border
     }
 
     /**
-     * @param \EasyExcel\Metadata\Style\Color $color
+     * @param  \EasyExcel\Metadata\Style\Color  $color
+     *
      * @return $this
      */
     public function setColor(Color $color): self
@@ -78,17 +92,5 @@ class Border
         $this->color = $color;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHashCode(): string
-    {
-        return md5(
-            __CLASS__ .
-            $this->getStyle() .
-            $this->getColor()->getHashCode()
-        );
     }
 }

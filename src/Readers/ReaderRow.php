@@ -37,8 +37,8 @@ abstract class ReaderRow implements ReaderRowInterface
 
     /**
      * @param  SheetInterface  $sheet
-     * @param  int  $startRow
-     * @param  int|null  $endRow
+     * @param  int             $startRow
+     * @param  int|null        $endRow
      */
     public function __construct(SheetInterface $sheet, int $startRow = 1, int $endRow = null)
     {

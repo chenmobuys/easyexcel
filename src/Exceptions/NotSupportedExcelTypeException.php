@@ -23,10 +23,10 @@ class NotSupportedExcelTypeException extends EasyExcelException
     /**
      * Constructor.
      *
-     * @param string $className
-     * @param string $excelType
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param  string           $className
+     * @param  string           $excelType
+     * @param  int              $code
+     * @param  \Throwable|null  $previous
      */
     public function __construct(string $className, string $excelType, int $code = 0, Throwable $previous = null)
     {

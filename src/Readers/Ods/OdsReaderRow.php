@@ -35,10 +35,10 @@ class OdsReaderRow extends ReaderRow
     protected $repeatedRows = 0;
 
     /**
-     * @param  string  $handler
+     * @param  string          $handler
      * @param  SheetInterface  $sheet
-     * @param  int  $startRow
-     * @param  int|null  $endRow
+     * @param  int             $startRow
+     * @param  int|null        $endRow
      */
     public function __construct(string $handler, SheetInterface $sheet, int $startRow = 1, int $endRow = null)
     {
@@ -84,7 +84,8 @@ class OdsReaderRow extends ReaderRow
 
         $this->xml->read();
         do {
-            $numberColumnsRepeated = ((int) $this->xml->getAttributeNS('number-columns-repeated', OdsReader::NS_TABLE)) ?: 1;
+            $numberColumnsRepeated = ((int) $this->xml->getAttributeNS('number-columns-repeated',
+                OdsReader::NS_TABLE)) ?: 1;
             if (!$this->xml->isEmptyElement) {
                 $valueType = $this->xml->getAttributeNs('value-type', OdsReader::NS_OFFICE);
                 $formulaValue = $this->xml->getAttributeNs('formula', OdsReader::NS_TABLE);
@@ -92,7 +93,7 @@ class OdsReaderRow extends ReaderRow
                 switch ($valueType) {
                     case 'date':
                     case 'time':
-                        $value = $this->xml->getAttributeNS($valueType . '-value', OdsReader::NS_OFFICE);
+                        $value = $this->xml->getAttributeNS($valueType.'-value', OdsReader::NS_OFFICE);
                         break;
                     default:
                         $value = $this->xml->getAttributeNs('value', OdsReader::NS_OFFICE) ?: $formattedValue;
@@ -197,7 +198,8 @@ class OdsReaderRow extends ReaderRow
                 if ($this->startRow == $this->position + 1) {
                     break;
                 }
-                $numberRowsRepeated = ((int) $this->xml->getAttributeNs('number-rows-repeated', OdsReader::NS_TABLE)) ?: 1;
+                $numberRowsRepeated = ((int) $this->xml->getAttributeNs('number-rows-repeated',
+                    OdsReader::NS_TABLE)) ?: 1;
                 if ($numberRowsRepeated > 1) {
                     if ($this->startRow > $this->position + $numberRowsRepeated + 1) {
                         $this->position += $numberRowsRepeated;

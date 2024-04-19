@@ -16,9 +16,9 @@ class SheetIndexNotExistsException extends EasyExcelException
     /**
      * Constructor.
      *
-     * @param int $sheetIndex
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param  int              $sheetIndex
+     * @param  int              $code
+     * @param  \Throwable|null  $previous
      */
     public function __construct(int $sheetIndex, int $code = 0, Throwable $previous = null)
     {

@@ -16,9 +16,9 @@ class FileNotWriteableException extends EasyExcelException
     /**
      * Constructor.
      *
-     * @param string $filename
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param  string           $filename
+     * @param  int              $code
+     * @param  \Throwable|null  $previous
      */
     public function __construct(string $filename, int $code = 0, Throwable $previous = null)
     {

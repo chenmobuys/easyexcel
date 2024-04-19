@@ -34,9 +34,19 @@ abstract class Reader extends Excel implements ReaderInterface
     }
 
     /**
+     * Load from file.
+     *
+     * @param  string  $filename
+     *
+     * @return $this
+     */
+    abstract protected function loadFromFile(string $filename): ReaderInterface;
+
+    /**
      * Load file.
      *
      * @param  string  $filename
+     *
      * @return $this
      */
     public static function load(string $filename): ReaderInterface
@@ -48,6 +58,7 @@ abstract class Reader extends Excel implements ReaderInterface
      *
      * @param  int  $startRow
      * @param  int|null  $endRow
+     *
      * @return ReaderRowInterface
      */
     public function getRowIterator(int $startRow = 1, int $endRow = null): ReaderRowInterface
@@ -60,42 +71,19 @@ abstract class Reader extends Excel implements ReaderInterface
     }
 
     /**
-     * Close file.
-     *
-     * @return void
-     */
-    public function close(): void
-    {
-        if (!$this->closed) {
-            $this->closeReader();
-            $this->closed = true;
-        }
-    }
-
-    /**
-     * Load from file.
-     *
-     * @param  string  $filename
-     * @return $this
-     */
-    abstract protected function loadFromFile(string $filename): ReaderInterface;
-
-    /**
      * Get row iterator by sheet.
      *
      * @param  \EasyExcel\Interfaces\SheetInterface  $sheet
-     * @param  int  $startRow
-     * @param  int|null  $endRow
+     * @param  int                                   $startRow
+     * @param  int|null                              $endRow
+     *
      * @return \EasyExcel\Interfaces\ReaderRowInterface
      */
-    abstract protected function getRowIteratorBySheet(SheetInterface $sheet, int $startRow = 1, int $endRow = null): ReaderRowInterface;
-
-    /**
-     * Close reader.
-     *
-     * @return void
-     */
-    abstract protected function closeReader(): void;
+    abstract protected function getRowIteratorBySheet(
+        SheetInterface $sheet,
+        int $startRow = 1,
+        int $endRow = null
+    ): ReaderRowInterface;
 
     /**
      * Clone.
@@ -112,4 +100,24 @@ abstract class Reader extends Excel implements ReaderInterface
     {
         $this->close();
     }
+
+    /**
+     * Close file.
+     *
+     * @return void
+     */
+    public function close(): void
+    {
+        if (!$this->closed) {
+            $this->closeReader();
+            $this->closed = true;
+        }
+    }
+
+    /**
+     * Close reader.
+     *
+     * @return void
+     */
+    abstract protected function closeReader(): void;
 }

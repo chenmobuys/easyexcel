@@ -9,8 +9,59 @@ use Exception;
 class Formatter
 {
     /**
-     * @param float $value
-     * @param string $formatCode
+     * @var array
+     */
+    private static $dateReplacements = [
+        '\\'    => '',
+        'am/pm' => 'A',
+        'yyyy'  => 'Y',
+        'yy'    => 'y',
+        'mmmmm' => 'M',
+        'mmmm'  => 'F',
+        'mmm'   => 'M',
+        ':mm'   => ':i',
+        'mm'    => 'm',
+        'm'     => 'n',
+        'dddd'  => 'l',
+        'ddd'   => 'D',
+        'dd'    => 'd',
+        'd'     => 'j',
+        'ss'    => 's',
+        '.s'    => '',
+        '12H'   => [],
+    ];
+    /**
+     * @var array
+     */
+    private static $dateReplacements12 = [
+        'hh' => 'h',
+        'h'  => 'G',
+    ];
+    /**
+     * @var array
+     */
+    private static $dateReplacements24 = [
+        'hh' => 'H',
+        'h'  => 'G',
+    ];
+    /**
+     * @var array
+     */
+    private static $colors = [
+        'Black',
+        'White',
+        'Red',
+        'Green',
+        'Blue',
+        'Yellow',
+        'Magenta',
+        'Cyan',
+    ];
+
+    /**
+     * @param  float   $value
+     * @param  string  $formatCode
+     *
      * @return string
      */
     public static function getFormattedValue(float $value, string $formatCode): string
@@ -23,39 +74,38 @@ class Formatter
 
         if (preg_match('/^(\[\$[\da-zA-Z]-[\dA-F]*])*[hmsdy]/i', $format)) {
             $value = self::getDatetimeFormatValue($value, $format);
-        } else if (preg_match('/#?.*\?\/\?/', $format)) {
-            $value = self::getFractionFormatValue($value, $format);
-        } else if (preg_match('/(0+)(\\.?)(0*)/', $format, $matches)) {
-            $value = self::getNumberFormatValue($value, $format, $matches);
         } else {
-            $value = str_replace('?', '', $format);
+            if (preg_match('/#?.*\?\/\?/', $format)) {
+                $value = self::getFractionFormatValue($value, $format);
+            } else {
+                if (preg_match('/(0+)(\\.?)(0*)/', $format, $matches)) {
+                    $value = self::getNumberFormatValue($value, $format, $matches);
+                } else {
+                    $value = str_replace('?', '', $format);
+                }
+            }
         }
 
         return $value;
     }
 
-    public static function isDateValue(float $value, string $formatCode): bool
-    {
-        $format = self::getFormat($value, $formatCode);
-
-        return preg_match('/^(\[\$[\da-zA-Z]-[\dA-F]*])*[hmsdy]/i', $format);
-    }
-
     /**
-     * @param float $value
-     * @param string $formatCode
+     * @param  float   $value
+     * @param  string  $formatCode
+     *
      * @return string
      */
     private static function getFormat(float $value, string $formatCode): string
     {
         [, $format] = self::parseFormatCode($value, $formatCode);
 
-        return (string)preg_replace('/_.?/ui', '', $format);
+        return (string) preg_replace('/_.?/ui', '', $format);
     }
 
     /**
-     * @param float $value
-     * @param string $formatCode
+     * @param  float   $value
+     * @param  string  $formatCode
+     *
      * @return array
      */
     private static function parseFormatCode(float $value, string $formatCode): array
@@ -69,7 +119,7 @@ class Formatter
         $sections = preg_split('/(;)(?=(?:[^"]|"[^"]*")*$)/u', $formatCode);
 
         $cnt = count($sections);
-        $colorRegex = '/\\[(' . implode('|', self::$colors) . ')]/mui';
+        $colorRegex = '/\\[('.implode('|', self::$colors).')]/mui';
         $condRegex = '/\\[(>|>=|<|<=|=|<>)([+-]?\\d+([.]\\d+)?)]/';
         $colors = ['', '', '', '', ''];
         $condOps = ['', '', '', '', ''];
@@ -78,12 +128,12 @@ class Formatter
         for ($idx = 0; $idx < $cnt; ++$idx) {
             if (preg_match($colorRegex, $sections[$idx], $matches)) {
                 $colors[$idx] = $matches[0];
-                $sections[$idx] = (string)preg_replace($colorRegex, '', $sections[$idx]);
+                $sections[$idx] = (string) preg_replace($colorRegex, '', $sections[$idx]);
             }
             if (preg_match($condRegex, $sections[$idx], $matches)) {
                 $condOps[$idx] = $matches[1];
                 $condValues[$idx] = $matches[2];
-                $sections[$idx] = (string)preg_replace($condRegex, '', $sections[$idx]);
+                $sections[$idx] = (string) preg_replace($condRegex, '', $sections[$idx]);
             }
         }
 
@@ -117,10 +167,11 @@ class Formatter
     }
 
     /**
-     * @param float $value
-     * @param string $cond
-     * @param float $val
-     * @param string $dfCond
+     * @param  float   $value
+     * @param  string  $cond
+     * @param  float   $val
+     * @param  string  $dfCond
+     *
      * @return bool
      */
     private static function splitFormatCompare(float $value, string $cond, float $val, string $dfCond): bool
@@ -150,8 +201,9 @@ class Formatter
     }
 
     /**
-     * @param float $value
-     * @param $format
+     * @param  float  $value
+     * @param         $format
+     *
      * @return string
      */
     private static function getDatetimeFormatValue(float $value, $format): string
@@ -172,9 +224,9 @@ class Formatter
         }
 
         try {
-            $days = (int)$value;
-            $seconds = (int)(abs($value - $days) * 86400);
-            $duration = sprintf('P%sD%s', $days, $seconds ? 'T' . $seconds . 'S' : '');
+            $days = (int) $value;
+            $seconds = (int) (abs($value - $days) * 86400);
+            $duration = sprintf('P%sD%s', $days, $seconds ? 'T'.$seconds.'S' : '');
             return $baseDate->add(new DateInterval($duration))->format($dateFormat);
         } catch (Exception $e) {
         }
@@ -183,8 +235,9 @@ class Formatter
     }
 
     /**
-     * @param float $value
-     * @param string $format
+     * @param  float   $value
+     * @param  string  $format
+     *
      * @return string
      */
     private static function getFractionFormatValue(float $value, string $format): string
@@ -228,43 +281,9 @@ class Formatter
     }
 
     /**
-     * @param float $value
-     * @param string $format
-     * @param array $matches
-     * @return string
-     */
-    private static function getNumberFormatValue(float $value, string $format, array $matches): string
-    {
-        $left = $matches[1];
-        $dec = $matches[2];
-        $right = $matches[3];
-        $scale = strlen($right);
-        $minWidth = strlen($left) + strlen($dec) + strlen($right);
-        $useThousands = (bool)preg_match('/(#,#|0,0)/', $format);
-        $format = preg_replace('/#/', '0', $format);
-        if ($useThousands) {
-            $format = preg_replace(['/0,0/', '/#,#/'], ['00', '##'], $format);
-            $value = number_format($value, $scale);
-            $value = preg_replace('/(0+)(\\.?)(0*)/', $value, $format);
-        } else if (preg_match('/^0(\.)?0*%$/', $format)) {
-            $value = sprintf('%.' . $scale . 'f', $value) . '%';
-        } else if (preg_match('/[0#]E[+-]0/i', $format)) {
-            $value = sprintf('%5.' . $scale . 'E', $value);
-        } else {
-            $value = sprintf('%0' . $minWidth . '.' . strlen($right) . 'f', round($value, strlen($right)));
-        }
-
-        if (preg_match('/\[\$(.*)]/u', $format, $matches)) {
-            [$currencyCode] = explode('-', $matches[1]);
-            $value = preg_replace('/\[\$([^]]*)]/u', $currencyCode, (string)$value);
-        }
-
-        return $value;
-    }
-
-    /**
-     * @param int $a
-     * @param int $b
+     * @param  int  $a
+     * @param  int  $b
+     *
      * @return int
      */
     public static function GCD(int $a, int $b): int
@@ -283,57 +302,50 @@ class Formatter
         return $c;
     }
 
-
     /**
-     * @var array
+     * @param  float   $value
+     * @param  string  $format
+     * @param  array   $matches
+     *
+     * @return string
      */
-    private static $dateReplacements = [
-        '\\'    => '',
-        'am/pm' => 'A',
-        'yyyy'  => 'Y',
-        'yy'    => 'y',
-        'mmmmm' => 'M',
-        'mmmm'  => 'F',
-        'mmm'   => 'M',
-        ':mm'   => ':i',
-        'mm'    => 'm',
-        'm'     => 'n',
-        'dddd'  => 'l',
-        'ddd'   => 'D',
-        'dd'    => 'd',
-        'd'     => 'j',
-        'ss'    => 's',
-        '.s'    => '',
-        '12H'   => [],
-    ];
+    private static function getNumberFormatValue(float $value, string $format, array $matches): string
+    {
+        $left = $matches[1];
+        $dec = $matches[2];
+        $right = $matches[3];
+        $scale = strlen($right);
+        $minWidth = strlen($left) + strlen($dec) + strlen($right);
+        $useThousands = (bool) preg_match('/(#,#|0,0)/', $format);
+        $format = preg_replace('/#/', '0', $format);
+        if ($useThousands) {
+            $format = preg_replace(['/0,0/', '/#,#/'], ['00', '##'], $format);
+            $value = number_format($value, $scale);
+            $value = preg_replace('/(0+)(\\.?)(0*)/', $value, $format);
+        } else {
+            if (preg_match('/^0(\.)?0*%$/', $format)) {
+                $value = sprintf('%.'.$scale.'f', $value).'%';
+            } else {
+                if (preg_match('/[0#]E[+-]0/i', $format)) {
+                    $value = sprintf('%5.'.$scale.'E', $value);
+                } else {
+                    $value = sprintf('%0'.$minWidth.'.'.strlen($right).'f', round($value, strlen($right)));
+                }
+            }
+        }
 
-    /**
-     * @var array
-     */
-    private static $dateReplacements12 = [
-        'hh' => 'h',
-        'h'  => 'G',
-    ];
+        if (preg_match('/\[\$(.*)]/u', $format, $matches)) {
+            [$currencyCode] = explode('-', $matches[1]);
+            $value = preg_replace('/\[\$([^]]*)]/u', $currencyCode, (string) $value);
+        }
 
-    /**
-     * @var array
-     */
-    private static $dateReplacements24 = [
-        'hh' => 'H',
-        'h'  => 'G',
-    ];
+        return $value;
+    }
 
-    /**
-     * @var array
-     */
-    private static $colors = [
-        'Black',
-        'White',
-        'Red',
-        'Green',
-        'Blue',
-        'Yellow',
-        'Magenta',
-        'Cyan',
-    ];
+    public static function isDateValue(float $value, string $formatCode): bool
+    {
+        $format = self::getFormat($value, $formatCode);
+
+        return preg_match('/^(\[\$[\da-zA-Z]-[\dA-F]*])*[hmsdy]/i', $format);
+    }
 }

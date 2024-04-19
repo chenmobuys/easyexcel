@@ -112,16 +112,6 @@ class XlsxReader extends Reader
     protected $cellXfsXML = [];
 
     /**
-     * Get theme.
-     *
-     * @return \EasyExcel\Readers\Xlsx\Theme|null
-     */
-    public function getTheme(): ?Theme
-    {
-        return $this->theme;
-    }
-
-    /**
      * Determine whether the file is readable.
      *
      * @param  string  $filename
@@ -161,6 +151,36 @@ class XlsxReader extends Reader
         }
 
         return $result;
+    }
+
+    /**
+     * Get XMLReader from name.
+     *
+     * @param  string  $name
+     * @param  string  $filename
+     *
+     * @return \XMLReader
+     */
+    private static function getXMLReaderFromName(string $name, string $filename): XMLReader
+    {
+        $xmlReader = new XMLReader();
+        $xmlReader->open(
+            'zip://'.$filename.'#'.$name,
+            null,
+            Settings::getLibXmlLoaderOptions()
+        );
+
+        return $xmlReader;
+    }
+
+    /**
+     * Get theme.
+     *
+     * @return \EasyExcel\Readers\Xlsx\Theme|null
+     */
+    public function getTheme(): ?Theme
+    {
+        return $this->theme;
     }
 
     /**
@@ -616,7 +636,7 @@ class XlsxReader extends Reader
                 }
                 $id = $sheetRelsXml->getAttribute('Id');
                 $this->hyperlinkRelationships[$sheetIndex][$id] = [
-                    'Target' => (string) $sheetRelsXml->getAttribute('Target'),
+                    'Target'     => (string) $sheetRelsXml->getAttribute('Target'),
                     'TargetMode' => (string) $sheetRelsXml->getAttribute('TargetMode'),
                 ];
             }
@@ -675,26 +695,6 @@ class XlsxReader extends Reader
         if ($borderXml && isset($borderXml->color)) {
             $border->getColor()->setARGB(self::readColor($borderXml->color));
         }
-    }
-
-    /**
-     * Get XMLReader from name.
-     *
-     * @param  string  $name
-     * @param  string  $filename
-     *
-     * @return \XMLReader
-     */
-    private static function getXMLReaderFromName(string $name, string $filename): XMLReader
-    {
-        $xmlReader = new XMLReader();
-        $xmlReader->open(
-            'zip://'.$filename.'#'.$name,
-            null,
-            Settings::getLibXmlLoaderOptions()
-        );
-
-        return $xmlReader;
     }
 
     /**

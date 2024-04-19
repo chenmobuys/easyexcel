@@ -7,29 +7,10 @@ use EasyExcel\Helpers\Encoding;
 class Helper
 {
     /**
-     * Get int.
-     *
-     * @param int $position
-     * @param string $data
-     * @param int $length
-     * @return int
-     */
-    public static function getInt(int $position, string $data, int $length = 4): int
-    {
-        $value = ord($data[$position]);
-        for ($i = 1; $i < $length; $i++) {
-            $ord = ord($data[$position + $i]);
-            $ord = $i == 3 ? ($ord >= 128 ? -abs(256 - $ord) : ($ord & 127)) : $ord;
-            $value = $value | ($ord << (8 * $i));
-        }
-
-        return $value >= 4294967294 ? -2 : $value;
-    }
-
-    /**
      * Get IEEE754.
      *
-     * @param float $rkNum
+     * @param  float  $rkNum
+     *
      * @return float
      */
     public static function getIEEE754(float $rkNum): float
@@ -56,6 +37,18 @@ class Helper
         }
 
         return $value;
+    }
+
+    /**
+     * Read rgb.
+     *
+     * @param  string  $rgb
+     *
+     * @return string
+     */
+    public static function readRGB(string $rgb): string
+    {
+        return sprintf('%02X%02X%02X', ord($rgb[0]), ord($rgb[1]), ord($rgb[2]));
     }
 
     // /**
@@ -88,21 +81,11 @@ class Helper
     // }
 
     /**
-     * Read rgb.
-     *
-     * @param string $rgb
-     * @return string
-     */
-    public static function readRGB(string $rgb): string
-    {
-        return sprintf('%02X%02X%02X', ord($rgb[0]), ord($rgb[1]), ord($rgb[2]));
-    }
-
-    /**
      * Read short byte string.
      *
-     * @param string $data
-     * @param string $encoding
+     * @param  string  $data
+     * @param  string  $encoding
+     *
      * @return string
      */
     public static function readByteStringShort(string $data, string $encoding): string
@@ -117,8 +100,9 @@ class Helper
     /**
      * Read long byte string.
      *
-     * @param string $data
-     * @param string $encoding
+     * @param  string  $data
+     * @param  string  $encoding
+     *
      * @return string
      */
     public static function readByteStringLong(string $data, string $encoding): string
@@ -131,10 +115,32 @@ class Helper
     }
 
     /**
+     * Get int.
+     *
+     * @param  int     $position
+     * @param  string  $data
+     * @param  int     $length
+     *
+     * @return int
+     */
+    public static function getInt(int $position, string $data, int $length = 4): int
+    {
+        $value = ord($data[$position]);
+        for ($i = 1; $i < $length; $i++) {
+            $ord = ord($data[$position + $i]);
+            $ord = $i == 3 ? ($ord >= 128 ? -abs(256 - $ord) : ($ord & 127)) : $ord;
+            $value = $value | ($ord << (8 * $i));
+        }
+
+        return $value >= 4294967294 ? -2 : $value;
+    }
+
+    /**
      * Read short unicode string.
      *
-     * @param string $data
-     * @param string $encoding
+     * @param  string  $data
+     * @param  string  $encoding
+     *
      * @return string
      */
     public static function readUnicodeStringShort(string $data, string $encoding): string
@@ -146,26 +152,12 @@ class Helper
     }
 
     /**
-     * Read long unicode string.
-     *
-     * @param string $data
-     * @param string $encoding
-     * @return string
-     */
-    public static function readUnicodeStringLong(string $data, string $encoding): string
-    {
-        // offset: 0: size: 2; length of the string (character count)
-        $characterCount = Helper::getInt(0, $data, 2);
-
-        return self::readUnicodeString(substr($data, 2), $characterCount, $encoding);
-    }
-
-    /**
      * Read unicode string.
      *
-     * @param string $data
-     * @param int $length
-     * @param string $encoding
+     * @param  string  $data
+     * @param  int     $length
+     * @param  string  $encoding
+     *
      * @return string
      */
     public static function readUnicodeString(string $data, int $length, string $encoding): string
@@ -196,7 +188,7 @@ class Helper
     /**
      * Convert UTF-16 string in compressed notation to uncompressed form. Only used for BIFF8.
      *
-     * @param string $string
+     * @param  string  $string
      *
      * @return string
      */
@@ -205,9 +197,25 @@ class Helper
         $uncompressedString = '';
         $strLen = strlen($string);
         for ($i = 0; $i < $strLen; ++$i) {
-            $uncompressedString .= $string[$i] . "\0";
+            $uncompressedString .= $string[$i]."\0";
         }
 
         return $uncompressedString;
+    }
+
+    /**
+     * Read long unicode string.
+     *
+     * @param  string  $data
+     * @param  string  $encoding
+     *
+     * @return string
+     */
+    public static function readUnicodeStringLong(string $data, string $encoding): string
+    {
+        // offset: 0: size: 2; length of the string (character count)
+        $characterCount = Helper::getInt(0, $data, 2);
+
+        return self::readUnicodeString(substr($data, 2), $characterCount, $encoding);
     }
 }

@@ -54,15 +54,15 @@ class Cell
 
     /**
      * @param  string|null  $value
-     * @param  Style|null  $style
-     * @param  int|null  $rowIndex
-     * @param  int|null  $columnIndex
+     * @param  Style|null   $style
+     * @param  int|null     $rowIndex
+     * @param  int|null     $columnIndex
      */
     public function __construct(
         ?string $value = null,
         ?Style $style = null,
         ?int $rowIndex = null,
-        ?int $columnIndex = null,
+        ?int $columnIndex = null
     ) {
         $this->value = $value;
         $this->style = $style;
@@ -85,6 +85,7 @@ class Cell
 
     /**
      * @param  int  $rowIndex
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setRowIndex(int $rowIndex): Cell
@@ -104,6 +105,7 @@ class Cell
 
     /**
      * @param  int  $columnIndex
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setColumnIndex(int $columnIndex): Cell
@@ -123,6 +125,7 @@ class Cell
 
     /**
      * @param  int  $xfIndex
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setXfIndex(int $xfIndex): Cell
@@ -142,6 +145,7 @@ class Cell
 
     /**
      * @param  string|null  $value
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setValue(?string $value): Cell
@@ -161,6 +165,7 @@ class Cell
 
     /**
      * @param  string  $formulaValue
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setFormulaValue(string $formulaValue): Cell
@@ -191,6 +196,7 @@ class Cell
 
     /**
      * @param  string  $formattedValue
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setFormattedValue(string $formattedValue): Cell
@@ -210,6 +216,7 @@ class Cell
 
     /**
      * @param  string  $mergeCell
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setMergeCell(string $mergeCell): Cell
@@ -237,6 +244,7 @@ class Cell
 
     /**
      * @param  \EasyExcel\Metadata\Hyperlink  $hyperlink
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setHyperlink(Hyperlink $hyperlink): Cell
@@ -264,6 +272,7 @@ class Cell
 
     /**
      * @param  \EasyExcel\Metadata\Style  $style
+     *
      * @return \EasyExcel\Metadata\Cell
      */
     public function setStyle(Style $style): Cell

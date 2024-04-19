@@ -79,145 +79,12 @@ class Style
 
     /**
      * @param  string  $index
+     *
      * @return $this
      */
     public function setIndex(string $index): Style
     {
         $this->index = $index;
-
-        return $this;
-    }
-
-    /**
-     * @return \EasyExcel\Metadata\Style\Font
-     */
-    public function getFont(): Font
-    {
-        return $this->font;
-    }
-
-    /**
-     * @param  \EasyExcel\Metadata\Style\Font  $font
-     * @return $this
-     */
-    public function setFont(Font $font): Style
-    {
-        $this->font = $font;
-
-        return $this;
-    }
-
-    /**
-     * @return \EasyExcel\Metadata\Style\Fill
-     */
-    public function getFill(): Fill
-    {
-        return $this->fill;
-    }
-
-    /**
-     * @param  \EasyExcel\Metadata\Style\Fill  $fill
-     * @return $this
-     */
-    public function setFill(Fill $fill): Style
-    {
-        $this->fill = $fill;
-
-        return $this;
-    }
-
-    /**
-     * @return \EasyExcel\Metadata\Style\Format
-     */
-    public function getFormat(): Format
-    {
-        return $this->format;
-    }
-
-    /**
-     * @param  \EasyExcel\Metadata\Style\Format  $format
-     * @return $this
-     */
-    public function setFormat(Format $format): Style
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
-    /**
-     * @return \EasyExcel\Metadata\Style\Borders
-     */
-    public function getBorders(): Borders
-    {
-        return $this->borders;
-    }
-
-    /**
-     * @param  \EasyExcel\Metadata\Style\Borders  $borders
-     * @return $this
-     */
-    public function setBorders(Borders $borders): Style
-    {
-        $this->borders = $borders;
-
-        return $this;
-    }
-
-
-    /**
-     * @return \EasyExcel\Metadata\Style\Alignment
-     */
-    public function getAlignment(): Alignment
-    {
-        return $this->alignment;
-    }
-
-    /**
-     * @param  \EasyExcel\Metadata\Style\Alignment  $alignment
-     * @return $this
-     */
-    public function setAlignment(Alignment $alignment): Style
-    {
-        $this->alignment = $alignment;
-
-        return $this;
-    }
-
-    /**
-     * @return \EasyExcel\Metadata\Style\Protection
-     */
-    public function getProtection(): Protection
-    {
-        return $this->protection;
-    }
-
-    /**
-     * @param  \EasyExcel\Metadata\Style\Protection  $protection
-     * @return $this
-     */
-    public function setProtection(Protection $protection): Style
-    {
-        $this->protection = $protection;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getQuotePrefix(): bool
-    {
-        return $this->quotePrefix;
-    }
-
-    /**
-     * @param  bool  $quotePrefix
-     * @return $this
-     */
-    public function setQuotePrefix(bool $quotePrefix): Style
-    {
-        $this->quotePrefix = $quotePrefix;
 
         return $this;
     }
@@ -237,5 +104,145 @@ class Style
             $this->getProtection()->getHashCode().
             (int) $this->getQuotePrefix()
         );
+    }
+
+    /**
+     * @return \EasyExcel\Metadata\Style\Font
+     */
+    public function getFont(): Font
+    {
+        return $this->font;
+    }
+
+    /**
+     * @param  \EasyExcel\Metadata\Style\Font  $font
+     *
+     * @return $this
+     */
+    public function setFont(Font $font): Style
+    {
+        $this->font = $font;
+
+        return $this;
+    }
+
+    /**
+     * @return \EasyExcel\Metadata\Style\Fill
+     */
+    public function getFill(): Fill
+    {
+        return $this->fill;
+    }
+
+    /**
+     * @param  \EasyExcel\Metadata\Style\Fill  $fill
+     *
+     * @return $this
+     */
+    public function setFill(Fill $fill): Style
+    {
+        $this->fill = $fill;
+
+        return $this;
+    }
+
+    /**
+     * @return \EasyExcel\Metadata\Style\Format
+     */
+    public function getFormat(): Format
+    {
+        return $this->format;
+    }
+
+    /**
+     * @param  \EasyExcel\Metadata\Style\Format  $format
+     *
+     * @return $this
+     */
+    public function setFormat(Format $format): Style
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * @return \EasyExcel\Metadata\Style\Borders
+     */
+    public function getBorders(): Borders
+    {
+        return $this->borders;
+    }
+
+    /**
+     * @param  \EasyExcel\Metadata\Style\Borders  $borders
+     *
+     * @return $this
+     */
+    public function setBorders(Borders $borders): Style
+    {
+        $this->borders = $borders;
+
+        return $this;
+    }
+
+    /**
+     * @return \EasyExcel\Metadata\Style\Alignment
+     */
+    public function getAlignment(): Alignment
+    {
+        return $this->alignment;
+    }
+
+    /**
+     * @param  \EasyExcel\Metadata\Style\Alignment  $alignment
+     *
+     * @return $this
+     */
+    public function setAlignment(Alignment $alignment): Style
+    {
+        $this->alignment = $alignment;
+
+        return $this;
+    }
+
+    /**
+     * @return \EasyExcel\Metadata\Style\Protection
+     */
+    public function getProtection(): Protection
+    {
+        return $this->protection;
+    }
+
+    /**
+     * @param  \EasyExcel\Metadata\Style\Protection  $protection
+     *
+     * @return $this
+     */
+    public function setProtection(Protection $protection): Style
+    {
+        $this->protection = $protection;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getQuotePrefix(): bool
+    {
+        return $this->quotePrefix;
+    }
+
+    /**
+     * @param  bool  $quotePrefix
+     *
+     * @return $this
+     */
+    public function setQuotePrefix(bool $quotePrefix): Style
+    {
+        $this->quotePrefix = $quotePrefix;
+
+        return $this;
     }
 }

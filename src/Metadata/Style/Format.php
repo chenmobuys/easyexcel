@@ -61,7 +61,7 @@ class Format
         3 => '#,##0',
         4 => '#,##0.00',
 
-        9 => '0%',
+        9  => '0%',
         10 => '0.00%',
         11 => '0.00E+00',
         12 => '# ?/?',
@@ -157,12 +157,26 @@ class Format
     }
 
     /**
-     * @param int $index
+     * @param  int  $index
+     *
      * @return string
      */
     public static function builtInFormatCode(int $index): string
     {
         return self::$builtinFormats[$index] ?? '';
+    }
+
+    /**
+     * Get hash code.
+     *
+     * @return string
+     */
+    public function getHashCode(): string
+    {
+        return md5(
+            __CLASS__.
+            $this->getFormatCode()
+        );
     }
 
     /**
@@ -174,7 +188,8 @@ class Format
     }
 
     /**
-     * @param string $formatCode
+     * @param  string  $formatCode
+     *
      * @return $this
      */
     public function setFormatCode(string $formatCode): self
@@ -182,18 +197,5 @@ class Format
         $this->formatCode = $formatCode;
 
         return $this;
-    }
-
-    /**
-     * Get hash code.
-     *
-     * @return string
-     */
-    public function getHashCode(): string
-    {
-        return md5(
-            __CLASS__ .
-            $this->getFormatCode()
-        );
     }
 }

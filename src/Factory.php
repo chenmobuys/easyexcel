@@ -55,6 +55,7 @@ final class Factory
      * Load file.
      *
      * @param  string  $filename
+     *
      * @return ReaderInterface
      */
     public static function load(string $filename): ReaderInterface
@@ -68,6 +69,7 @@ final class Factory
      * Create reader For File.
      *
      * @param  string  $filename
+     *
      * @return mixed
      */
     public static function createReaderForFile(string $filename): string
@@ -98,115 +100,10 @@ final class Factory
     }
 
     /**
-     * Create reader for Excel type.
-     *
-     * @param  string  $excelType
-     * @return mixed
-     */
-    public static function createReader(string $excelType): string
-    {
-        if (!isset(self::$readers[$excelType])) {
-            throw new NotSupportedExcelTypeException(ReaderInterface::class, $excelType);
-        }
-
-        return self::$readers[$excelType];
-    }
-
-    /**
-     * Register a reader with Excel type and class name.
-     *
-     * @param  string  $excelType
-     * @param  string  $className
-     * @return void
-     */
-    public static function registerReader(string $excelType, string $className): void
-    {
-        if (!is_a($className, ReaderInterface::class, true)) {
-            throw new RegisterExcelTypeFailedException(ReaderInterface::class);
-        }
-
-        self::$readers[$excelType] = $className;
-    }
-
-    /**
-     * Open file.
-     *
-     * @param  string  $filename
-     * @return WriterInterface
-     */
-    public static function open(string $filename): WriterInterface
-    {
-        $writer = self::createWriterForFile($filename);
-
-        return $writer::open($filename);
-    }
-
-    /**
-     * Create writer For File.
-     *
-     * @param  string  $filename
-     * @return mixed
-     */
-    public static function createWriterForFile(string $filename): string
-    {
-        $guessedExcelType = self::guessExcelTypeFromFilename($filename);
-
-        if ($guessedExcelType) {
-            $writer = self::createWriter($guessedExcelType);
-            if ($writer::writeable($filename)) {
-                return $writer;
-            }
-        }
-
-        throw new FileNotWriteableException($filename);
-    }
-
-    /**
-     * Create writer for Excel type.
-     *
-     * @param  string  $excelType
-     * @return mixed
-     */
-    public static function createWriter(string $excelType): string
-    {
-        if (!isset(self::$writers[$excelType])) {
-            throw new NotSupportedExcelTypeException(WriterInterface::class, $excelType);
-        }
-
-        return self::$writers[$excelType];
-    }
-
-    /**
-     * Register a writer with Excel type and class name.
-     *
-     * @param  string  $excelType
-     * @param  string  $className
-     * @return void
-     */
-    public static function registerWriter(string $excelType, string $className): void
-    {
-        if (!is_a($className, WriterInterface::class, true)) {
-            throw new RegisterExcelTypeFailedException(WriterInterface::class);
-        }
-
-        self::$writers[$excelType] = $className;
-    }
-
-    /**
-     * Register excel type resolver.
-     *
-     * @param  \Closure|null  $excelTypeResolver
-     * @return void
-     */
-    public static function registerExcelTypeResolver(?Closure $excelTypeResolver): void
-    {
-        self::$excelTypeResolver = $excelTypeResolver;
-    }
-
-    /**
      * Detect excel type for filename.
      *
      * @param  string  $filename
+     *
      * @return ?string
      */
     public static function guessExcelTypeFromFilename(string $filename): ?string
@@ -244,5 +141,118 @@ final class Factory
             default:
                 return null;
         }
+    }
+
+    /**
+     * Create reader for Excel type.
+     *
+     * @param  string  $excelType
+     *
+     * @return mixed
+     */
+    public static function createReader(string $excelType): string
+    {
+        if (!isset(self::$readers[$excelType])) {
+            throw new NotSupportedExcelTypeException(ReaderInterface::class, $excelType);
+        }
+
+        return self::$readers[$excelType];
+    }
+
+    /**
+     * Register a reader with Excel type and class name.
+     *
+     * @param  string  $excelType
+     * @param  string  $className
+     *
+     * @return void
+     */
+    public static function registerReader(string $excelType, string $className): void
+    {
+        if (!is_a($className, ReaderInterface::class, true)) {
+            throw new RegisterExcelTypeFailedException(ReaderInterface::class);
+        }
+
+        self::$readers[$excelType] = $className;
+    }
+
+    /**
+     * Open file.
+     *
+     * @param  string  $filename
+     *
+     * @return WriterInterface
+     */
+    public static function open(string $filename): WriterInterface
+    {
+        $writer = self::createWriterForFile($filename);
+
+        return $writer::open($filename);
+    }
+
+    /**
+     * Create writer For File.
+     *
+     * @param  string  $filename
+     *
+     * @return mixed
+     */
+    public static function createWriterForFile(string $filename): string
+    {
+        $guessedExcelType = self::guessExcelTypeFromFilename($filename);
+
+        if ($guessedExcelType) {
+            $writer = self::createWriter($guessedExcelType);
+            if ($writer::writeable($filename)) {
+                return $writer;
+            }
+        }
+
+        throw new FileNotWriteableException($filename);
+    }
+
+    /**
+     * Create writer for Excel type.
+     *
+     * @param  string  $excelType
+     *
+     * @return mixed
+     */
+    public static function createWriter(string $excelType): string
+    {
+        if (!isset(self::$writers[$excelType])) {
+            throw new NotSupportedExcelTypeException(WriterInterface::class, $excelType);
+        }
+
+        return self::$writers[$excelType];
+    }
+
+    /**
+     * Register a writer with Excel type and class name.
+     *
+     * @param  string  $excelType
+     * @param  string  $className
+     *
+     * @return void
+     */
+    public static function registerWriter(string $excelType, string $className): void
+    {
+        if (!is_a($className, WriterInterface::class, true)) {
+            throw new RegisterExcelTypeFailedException(WriterInterface::class);
+        }
+
+        self::$writers[$excelType] = $className;
+    }
+
+    /**
+     * Register excel type resolver.
+     *
+     * @param  \Closure|null  $excelTypeResolver
+     *
+     * @return void
+     */
+    public static function registerExcelTypeResolver(?Closure $excelTypeResolver): void
+    {
+        self::$excelTypeResolver = $excelTypeResolver;
     }
 }

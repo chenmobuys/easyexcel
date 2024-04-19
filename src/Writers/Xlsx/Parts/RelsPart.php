@@ -8,15 +8,15 @@ class RelsPart extends Part
 {
     protected $relationshipElements = [
         [
-            'Type' => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument',
+            'Type'   => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument',
             'Target' => 'xl/workbook.xml',
         ],
         [
-            'Type' => 'http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties',
+            'Type'   => 'http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties',
             'Target' => 'docProps/core.xml',
         ],
         [
-            'Type' => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties',
+            'Type'   => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties',
             'Target' => 'docProps/app.xml',
         ],
     ];
@@ -33,7 +33,7 @@ class RelsPart extends Part
 
         // Write relationship elements
         foreach ($this->relationshipElements as $index => $attributes) {
-            $attributes['Id'] = 'rId' . ($index + 1);
+            $attributes['Id'] = 'rId'.($index + 1);
             $this->writeElementWithAttributes('Relationship', $attributes);
         }
 

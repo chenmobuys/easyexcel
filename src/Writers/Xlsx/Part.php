@@ -45,6 +45,13 @@ abstract class Part
     }
 
     /**
+     * Write start.
+     *
+     * @return $this
+     */
+    abstract protected function writeStart(): self;
+
+    /**
      * @return \XMLWriter
      */
     public function getXml(): XMLWriter
@@ -69,22 +76,11 @@ abstract class Part
     }
 
     /**
-     * Write element with attributes.
+     * Write end.
      *
-     * @param string $name
-     * @param array $attributes
      * @return $this
      */
-    protected function writeElementWithAttributes(string $name, array $attributes = []): self
-    {
-        $this->xml->startElement($name);
-        foreach ($attributes as $name => $value) {
-            $this->xml->writeAttribute($name, $value);
-        }
-        $this->xml->endElement();
-
-        return $this;
-    }
+    abstract protected function writeEnd(): self;
 
     /**
      * Close part.
@@ -98,16 +94,21 @@ abstract class Part
     }
 
     /**
-     * Write start.
+     * Write element with attributes.
+     *
+     * @param  string  $name
+     * @param  array   $attributes
      *
      * @return $this
      */
-    abstract protected function writeStart(): self;
+    protected function writeElementWithAttributes(string $name, array $attributes = []): self
+    {
+        $this->xml->startElement($name);
+        foreach ($attributes as $name => $value) {
+            $this->xml->writeAttribute($name, $value);
+        }
+        $this->xml->endElement();
 
-    /**
-     * Write end.
-     *
-     * @return $this
-     */
-    abstract protected function writeEnd(): self;
+        return $this;
+    }
 }

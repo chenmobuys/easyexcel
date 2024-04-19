@@ -12,6 +12,7 @@ class Filesystem
      * Get temp filename.
      *
      * @param  string  $prefix
+     *
      * @return string
      */
     public static function getTempName(string $prefix = self::DEFAULT_TEMP_PREFIX): string

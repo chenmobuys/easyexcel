@@ -26,13 +26,26 @@ class Protection
     /**
      * @return string
      */
+    public function getHashCode(): string
+    {
+        return md5(
+            __CLASS__.
+            $this->getLocked().
+            $this->getHidden()
+        );
+    }
+
+    /**
+     * @return string
+     */
     public function getLocked(): string
     {
         return $this->locked;
     }
 
     /**
-     * @param string $locked
+     * @param  string  $locked
+     *
      * @return $this
      */
     public function setLocked(string $locked): self
@@ -51,7 +64,8 @@ class Protection
     }
 
     /**
-     * @param string $hidden
+     * @param  string  $hidden
+     *
      * @return $this
      */
     public function setHidden(string $hidden): self
@@ -59,17 +73,5 @@ class Protection
         $this->hidden = $hidden;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHashCode(): string
-    {
-        return md5(
-            __CLASS__ .
-            $this->getLocked() .
-            $this->getHidden()
-        );
     }
 }

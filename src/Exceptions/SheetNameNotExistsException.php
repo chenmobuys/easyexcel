@@ -16,9 +16,9 @@ class SheetNameNotExistsException extends EasyExcelException
     /**
      * Constructor.
      *
-     * @param string $sheetName
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param  string           $sheetName
+     * @param  int              $code
+     * @param  \Throwable|null  $previous
      */
     public function __construct(string $sheetName, int $code = 0, Throwable $previous = null)
     {

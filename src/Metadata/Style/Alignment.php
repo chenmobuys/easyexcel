@@ -80,63 +80,6 @@ class Alignment
     protected $readOrder = self::READORDER_CONTEXT;
 
     /**
-     * @return string
-     */
-    public function getHorizontal(): string
-    {
-        return $this->horizontal;
-    }
-
-    /**
-     * @param string $horizontal
-     * @return $this
-     */
-    public function setHorizontal(string $horizontal): self
-    {
-        $this->horizontal = $horizontal;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVertical(): string
-    {
-        return $this->vertical;
-    }
-
-    /**
-     * @param string $vertical
-     * @return $this
-     */
-    public function setVertical(string $vertical): self
-    {
-        $this->vertical = $vertical;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTextRotation(): int
-    {
-        return $this->textRotation;
-    }
-
-    /**
-     * @param int $textRotation
-     * @return $this
-     */
-    public function setTextRotation(int $textRotation): self
-    {
-        $this->textRotation = $textRotation;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function getWrapText(): bool
@@ -145,7 +88,8 @@ class Alignment
     }
 
     /**
-     * @param bool $wrapText
+     * @param  bool  $wrapText
+     *
      * @return $this
      */
     public function setWrapText(bool $wrapText): self
@@ -164,7 +108,8 @@ class Alignment
     }
 
     /**
-     * @param bool $shrinkToFit
+     * @param  bool  $shrinkToFit
+     *
      * @return $this
      */
     public function setShrinkToFit(bool $shrinkToFit): self
@@ -175,20 +120,56 @@ class Alignment
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIndent(): int
+    public function getHashCode(): string
     {
-        return $this->indent;
+        return md5(
+            __CLASS__.
+            $this->getHorizontal().
+            $this->getVertical().
+            $this->getReadOrder().
+            $this->getIndent().
+            $this->getTextRotation()
+        );
     }
 
     /**
-     * @param int $indent
+     * @return string
+     */
+    public function getHorizontal(): string
+    {
+        return $this->horizontal;
+    }
+
+    /**
+     * @param  string  $horizontal
+     *
      * @return $this
      */
-    public function setIndent(int $indent): self
+    public function setHorizontal(string $horizontal): self
     {
-        $this->indent = $indent;
+        $this->horizontal = $horizontal;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVertical(): string
+    {
+        return $this->vertical;
+    }
+
+    /**
+     * @param  string  $vertical
+     *
+     * @return $this
+     */
+    public function setVertical(string $vertical): self
+    {
+        $this->vertical = $vertical;
 
         return $this;
     }
@@ -202,7 +183,8 @@ class Alignment
     }
 
     /**
-     * @param string $readOrder
+     * @param  string  $readOrder
+     *
      * @return $this
      */
     public function setReadOrder(string $readOrder): self
@@ -213,17 +195,42 @@ class Alignment
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getHashCode(): string
+    public function getIndent(): int
     {
-        return md5(
-            __CLASS__ .
-            $this->getHorizontal() .
-            $this->getVertical() .
-            $this->getReadOrder() .
-            $this->getIndent() .
-            $this->getTextRotation()
-        );
+        return $this->indent;
+    }
+
+    /**
+     * @param  int  $indent
+     *
+     * @return $this
+     */
+    public function setIndent(int $indent): self
+    {
+        $this->indent = $indent;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTextRotation(): int
+    {
+        return $this->textRotation;
+    }
+
+    /**
+     * @param  int  $textRotation
+     *
+     * @return $this
+     */
+    public function setTextRotation(int $textRotation): self
+    {
+        $this->textRotation = $textRotation;
+
+        return $this;
     }
 }

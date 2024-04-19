@@ -18,8 +18,8 @@ class Row
     /**
      * Constructor.
      *
-     * @param array $cells
-     * @param int|null $rowIndex
+     * @param  array     $cells
+     * @param  int|null  $rowIndex
      */
     public function __construct(array $cells = [], int $rowIndex = null)
     {
@@ -36,7 +36,8 @@ class Row
     }
 
     /**
-     * @param int $rowIndex
+     * @param  int  $rowIndex
+     *
      * @return $this
      */
     public function setRowIndex(int $rowIndex): self
@@ -55,7 +56,8 @@ class Row
     }
 
     /**
-     * @param array $cells
+     * @param  array  $cells
+     *
      * @return $this
      */
     public function setCells(array $cells): self
@@ -70,7 +72,8 @@ class Row
     }
 
     /**
-     * @param bool $formatValue
+     * @param  bool  $formatValue
+     *
      * @return array
      */
     public function toArray(bool $formatValue = false): array

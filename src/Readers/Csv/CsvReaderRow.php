@@ -21,11 +21,11 @@ class CsvReaderRow extends ReaderRow
     protected $encoding;
 
     /**
-     * @param  SplFileObject  $handler
-     * @param  string  $encoding
+     * @param  SplFileObject   $handler
+     * @param  string          $encoding
      * @param  SheetInterface  $sheet
-     * @param  int  $startRow
-     * @param  int|null  $endRow
+     * @param  int             $startRow
+     * @param  int|null        $endRow
      */
     public function __construct(
         SplFileObject $handler,

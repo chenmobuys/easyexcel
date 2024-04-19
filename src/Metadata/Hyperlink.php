@@ -17,8 +17,8 @@ class Hyperlink
     /**
      * Constructor.
      *
-     * @param string $url
-     * @param string $tooltip
+     * @param  string  $url
+     * @param  string  $tooltip
      */
     public function __construct(string $url = '', string $tooltip = '')
     {
@@ -40,7 +40,8 @@ class Hyperlink
     /**
      * Set url.
      *
-     * @param string $url
+     * @param  string  $url
+     *
      * @return $this
      */
     public function setUrl(string $url): self
@@ -63,7 +64,7 @@ class Hyperlink
     /**
      * Set tooltip.
      *
-     * @param string $tootip
+     * @param  string  $tootip
      *
      * @return $this
      */

@@ -8,11 +8,11 @@ class WorkbookRelsPart extends Part
 {
     protected $relationshipElements = [
         [
-            'Type' => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles',
+            'Type'   => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles',
             'Target' => 'styles.xml',
         ],
         [
-            'Type' => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings',
+            'Type'   => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings',
             'Target' => 'sharedStrings.xml',
         ],
     ];
@@ -37,11 +37,26 @@ class WorkbookRelsPart extends Part
 
         // Write relationship elements
         foreach ($this->relationshipElements as $index => $attributes) {
-            $attributes['Id'] = 'rId' . ($index + 1);
+            $attributes['Id'] = 'rId'.($index + 1);
             $this->writeElementWithAttributes('Relationship', $attributes);
         }
 
         return $this;
+    }
+
+    /**
+     * Get relationship sheet attributes.
+     *
+     * @param  int  $index
+     *
+     * @return string[]
+     */
+    private function getRelationshipSheetAttributes(int $index): array
+    {
+        return [
+            'Type'   => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet',
+            'Target' => 'worksheets/sheet'.($index + 1).'.xml',
+        ];
     }
 
     /**
@@ -54,19 +69,5 @@ class WorkbookRelsPart extends Part
         $this->xml->endElement();
 
         return $this;
-    }
-
-    /**
-     * Get relationship sheet attributes.
-     *
-     * @param int $index
-     * @return string[]
-     */
-    private function getRelationshipSheetAttributes(int $index): array
-    {
-        return [
-            'Type' => 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet',
-            'Target' => 'worksheets/sheet' . ($index + 1) . '.xml',
-        ];
     }
 }

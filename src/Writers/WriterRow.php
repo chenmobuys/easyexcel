@@ -28,8 +28,9 @@ abstract class WriterRow implements WriterRowInterface
     }
 
     /**
-     * @param  array  $rows
+     * @param  array                           $rows
      * @param  \EasyExcel\Metadata\Style|null  $style
+     *
      * @return void
      */
     public function writes(array $rows, ?Style $style = null): void
@@ -50,20 +51,22 @@ abstract class WriterRow implements WriterRowInterface
     }
 
     /**
-     * Write row.
-     *
-     * @param  \EasyExcel\Metadata\Row  $row
-     * @param  \EasyExcel\Metadata\Style|null  $style
-     * @return void
-     */
-    abstract protected function writeRow(Row $row, ?Style $style = null): void;
-
-    /**
      * Write array.
      *
-     * @param  array  $row
+     * @param  array                           $row
      * @param  \EasyExcel\Metadata\Style|null  $style
+     *
      * @return void
      */
     abstract protected function writeArray(array $row, ?Style $style = null): void;
+
+    /**
+     * Write row.
+     *
+     * @param  \EasyExcel\Metadata\Row         $row
+     * @param  \EasyExcel\Metadata\Style|null  $style
+     *
+     * @return void
+     */
+    abstract protected function writeRow(Row $row, ?Style $style = null): void;
 }

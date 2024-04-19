@@ -29,7 +29,8 @@ class FillPattern
     ];
 
     /**
-     * @param int $index
+     * @param  int  $index
+     *
      * @return string
      */
     public static function indexedFillPattern(int $index): string

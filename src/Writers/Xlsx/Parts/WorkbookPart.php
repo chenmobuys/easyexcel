@@ -39,7 +39,7 @@ class WorkbookPart extends Part
             $this->xml->startElement('sheet');
             $this->xml->writeAttribute('name', $sheet->getName());
             $this->xml->writeAttribute('sheetId', $index + 1);
-            $this->xml->writeAttribute('r:id', 'rId' . ($index + 1));
+            $this->xml->writeAttribute('r:id', 'rId'.($index + 1));
             $this->xml->endElement();
         }
         $this->xml->endElement();

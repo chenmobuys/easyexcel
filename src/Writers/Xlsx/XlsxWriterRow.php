@@ -18,7 +18,7 @@ class XlsxWriterRow extends WriterRow
     protected $handler;
 
     /**
-     * @param  SheetPart  $handler
+     * @param  SheetPart       $handler
      * @param  SheetInterface  $sheet
      */
     public function __construct(SheetPart $handler, SheetInterface $sheet)
@@ -28,10 +28,21 @@ class XlsxWriterRow extends WriterRow
     }
 
     /**
+     * Close row writer.
+     *
+     * @return void
+     */
+    public function close(): void
+    {
+        $this->handler = null;
+    }
+
+    /**
      * Write row.
      *
-     * @param \EasyExcel\Metadata\Row $row
-     * @param \EasyExcel\Metadata\Style|null $style
+     * @param  \EasyExcel\Metadata\Row         $row
+     * @param  \EasyExcel\Metadata\Style|null  $style
+     *
      * @return void
      */
     protected function writeRow(Row $row, ?Style $style = null): void
@@ -47,34 +58,12 @@ class XlsxWriterRow extends WriterRow
     }
 
     /**
-     * Write array.
-     *
-     * @param array $row
-     * @param \EasyExcel\Metadata\Style|null $style
-     * @return void
-     */
-    protected function writeArray(array $row, ?Style $style = null): void
-    {
-        $this->handler->getXml()->startElement('row');
-        $this->handler->getXml()->writeAttribute('r', $this->rowIndex + 1);
-
-        foreach ($row as $columnIndex => $cell) {
-            if ($cell instanceof Cell) {
-                $this->writeCellObject($columnIndex, $cell, $style);
-            } else {
-                $this->writeCellString($columnIndex, $cell, $style);
-            }
-        }
-
-        $this->handler->getXml()->endElement();
-    }
-
-    /**
      * Write cell object.
      *
-     * @param int $columnIndex
-     * @param \EasyExcel\Metadata\Cell $cell
-     * @param \EasyExcel\Metadata\Style|null $style
+     * @param  int                             $columnIndex
+     * @param  \EasyExcel\Metadata\Cell        $cell
+     * @param  \EasyExcel\Metadata\Style|null  $style
+     *
      * @return void
      */
     protected function writeCellObject(int $columnIndex, Cell $cell, ?Style $style): void
@@ -100,15 +89,17 @@ class XlsxWriterRow extends WriterRow
         if ($style && !in_array($style->getFormat()->getFormatCode(), $stringFormats)) {
             $this->handler->getXml()->writeAttribute('t', 'n');
             $this->handler->getXml()->writeElement('v', $cell->getValue(false));
-        } else if ($cell->getFormulaValue()) {
-            $this->handler->getXml()->writeAttribute('t', 'str');
-            $this->handler->getXml()->writeElement('f', $cell->getFormulaValue());
-            $this->handler->getXml()->writeElement('v', $cell->getValue(false));
         } else {
-            $this->handler->getXml()->writeAttribute('t', 'inlineStr');
-            $this->handler->getXml()->startElement('is');
-            $this->handler->getXml()->writeElement('t', $cell->getValue(false));
-            $this->handler->getXml()->endElement();
+            if ($cell->getFormulaValue()) {
+                $this->handler->getXml()->writeAttribute('t', 'str');
+                $this->handler->getXml()->writeElement('f', $cell->getFormulaValue());
+                $this->handler->getXml()->writeElement('v', $cell->getValue(false));
+            } else {
+                $this->handler->getXml()->writeAttribute('t', 'inlineStr');
+                $this->handler->getXml()->startElement('is');
+                $this->handler->getXml()->writeElement('t', $cell->getValue(false));
+                $this->handler->getXml()->endElement();
+            }
         }
 
         if ($cell->hasHyperlink()) {
@@ -123,11 +114,36 @@ class XlsxWriterRow extends WriterRow
     }
 
     /**
+     * Write array.
+     *
+     * @param  array                           $row
+     * @param  \EasyExcel\Metadata\Style|null  $style
+     *
+     * @return void
+     */
+    protected function writeArray(array $row, ?Style $style = null): void
+    {
+        $this->handler->getXml()->startElement('row');
+        $this->handler->getXml()->writeAttribute('r', $this->rowIndex + 1);
+
+        foreach ($row as $columnIndex => $cell) {
+            if ($cell instanceof Cell) {
+                $this->writeCellObject($columnIndex, $cell, $style);
+            } else {
+                $this->writeCellString($columnIndex, $cell, $style);
+            }
+        }
+
+        $this->handler->getXml()->endElement();
+    }
+
+    /**
      * Write cell string.
      *
-     * @param int $columnIndex
-     * @param string|null $cellValue
-     * @param \EasyExcel\Metadata\Style|null $style
+     * @param  int                             $columnIndex
+     * @param  string|null                     $cellValue
+     * @param  \EasyExcel\Metadata\Style|null  $style
+     *
      * @return void
      */
     protected function writeCellString(int $columnIndex, ?string $cellValue, ?Style $style): void
@@ -160,15 +176,5 @@ class XlsxWriterRow extends WriterRow
         }
 
         $this->handler->getXml()->endElement();
-    }
-
-    /**
-     * Close row writer.
-     *
-     * @return void
-     */
-    public function close(): void
-    {
-        $this->handler = null;
     }
 }

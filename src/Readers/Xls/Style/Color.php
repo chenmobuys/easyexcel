@@ -138,9 +138,10 @@ class Color
     ];
 
     /**
-     * @param int $index
-     * @param array $palette
-     * @param int $version
+     * @param  int    $index
+     * @param  array  $palette
+     * @param  int    $version
+     *
      * @return string
      */
     public static function indexedColor(int $index, array $palette, int $version): string

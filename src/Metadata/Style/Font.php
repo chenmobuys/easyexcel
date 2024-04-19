@@ -85,13 +85,33 @@ class Font
     /**
      * @return string
      */
+    public function getHashCode(): string
+    {
+        return md5(
+            __CLASS__.
+            $this->getName().
+            $this->getSize().
+            (int) $this->getBold().
+            (int) $this->getItalic().
+            (int) $this->getSuperscript().
+            (int) $this->getSubscript().
+            $this->getUnderline().
+            $this->getStrikethrough().
+            $this->getColor()->getHashCode()
+        );
+    }
+
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
+     *
      * @return $this
      */
     public function setName(string $name): self
@@ -110,7 +130,8 @@ class Font
     }
 
     /**
-     * @param float $size
+     * @param  float  $size
+     *
      * @return $this
      */
     public function setSize(float $size): self
@@ -129,7 +150,8 @@ class Font
     }
 
     /**
-     * @param bool $bold
+     * @param  bool  $bold
+     *
      * @return $this
      */
     public function setBold(bool $bold): self
@@ -148,7 +170,8 @@ class Font
     }
 
     /**
-     * @param bool $italic
+     * @param  bool  $italic
+     *
      * @return $this
      */
     public function setItalic(bool $italic): self
@@ -167,7 +190,8 @@ class Font
     }
 
     /**
-     * @param bool $superscript
+     * @param  bool  $superscript
+     *
      * @return $this
      */
     public function setSuperscript(bool $superscript): self
@@ -186,7 +210,8 @@ class Font
     }
 
     /**
-     * @param bool $subscript
+     * @param  bool  $subscript
+     *
      * @return $this
      */
     public function setSubscript(bool $subscript): self
@@ -205,7 +230,8 @@ class Font
     }
 
     /**
-     * @param string $underline
+     * @param  string  $underline
+     *
      * @return $this
      */
     public function setUnderline(string $underline): self
@@ -224,7 +250,8 @@ class Font
     }
 
     /**
-     * @param bool $strikethrough
+     * @param  bool  $strikethrough
+     *
      * @return $this
      */
     public function setStrikethrough(bool $strikethrough): self
@@ -243,7 +270,8 @@ class Font
     }
 
     /**
-     * @param \EasyExcel\Metadata\Style\Color $color
+     * @param  \EasyExcel\Metadata\Style\Color  $color
+     *
      * @return $this
      */
     public function setColor(Color $color): self
@@ -251,24 +279,5 @@ class Font
         $this->color = $color;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHashCode(): string
-    {
-        return md5(
-            __CLASS__ .
-            $this->getName() .
-            $this->getSize() .
-            (int) $this->getBold() .
-            (int) $this->getItalic() .
-            (int) $this->getSuperscript() .
-            (int) $this->getSubscript() .
-            $this->getUnderline() .
-            $this->getStrikethrough() .
-            $this->getColor()->getHashCode()
-        );
     }
 }

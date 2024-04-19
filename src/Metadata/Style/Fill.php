@@ -62,13 +62,28 @@ class Fill
     /**
      * @return string
      */
+    public function getHashCode(): string
+    {
+        return md5(
+            __CLASS__.
+            $this->getType().
+            $this->getRotation().
+            $this->getStartColor()->getHashCode().
+            $this->getEndColor()->getHashCode()
+        );
+    }
+
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
+     * @param  string  $type
+     *
      * @return $this
      */
     public function setType(string $type): self
@@ -87,7 +102,8 @@ class Fill
     }
 
     /**
-     * @param float $rotation
+     * @param  float  $rotation
+     *
      * @return $this
      */
     public function setRotation(float $rotation): self
@@ -106,7 +122,8 @@ class Fill
     }
 
     /**
-     * @param \EasyExcel\Metadata\Style\Color $startColor
+     * @param  \EasyExcel\Metadata\Style\Color  $startColor
+     *
      * @return $this
      */
     public function setStartColor(Color $startColor): self
@@ -125,7 +142,8 @@ class Fill
     }
 
     /**
-     * @param \EasyExcel\Metadata\Style\Color $endColor
+     * @param  \EasyExcel\Metadata\Style\Color  $endColor
+     *
      * @return $this
      */
     public function setEndColor(Color $endColor): self
@@ -133,19 +151,5 @@ class Fill
         $this->endColor = $endColor;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHashCode(): string
-    {
-        return md5(
-            __CLASS__ .
-            $this->getType() .
-            $this->getRotation() .
-            $this->getStartColor()->getHashCode() .
-            $this->getEndColor()->getHashCode()
-        );
     }
 }

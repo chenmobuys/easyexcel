@@ -78,7 +78,7 @@ class OLEReader
     private $workbook;
 
     /**
-     * @param string $filename
+     * @param  string  $filename
      */
     public function __construct(string $filename)
     {
@@ -87,38 +87,6 @@ class OLEReader
         $this->readSectorChains();
 
         $this->readDirectoryStream();
-    }
-
-    /**
-     * Get workbook stream.
-     *
-     * @return string
-     */
-    public function getWorkbook(): string
-    {
-        if (is_null($this->workbook)) {
-            $this->workbook = $this->getStreamByName('WORKBOOK');
-        }
-
-        return $this->workbook;
-    }
-
-    /**
-     * Get stream by name.
-     *
-     * @param string $name
-     * @return string
-     */
-    public function getStreamByName(string $name): string
-    {
-        $streamProperty = $this->getDirectoryPropertyByName($name);
-        if (($streamProperty['size'] < $this->standardStreamMinSize)) {
-            $rootEntryProperty = $this->getDirectoryPropertyByName('ROOT ENTRY');
-            $rootEntryStreamData = $this->getStreamData($rootEntryProperty['secId']);
-            return $this->getShortStreamData($streamProperty['secId'], $rootEntryStreamData);
-        }
-
-        return $this->getStreamData($streamProperty['secId']);
     }
 
     /**
@@ -222,10 +190,10 @@ class OLEReader
             $size = Helper::getInt(self::DIRECTORY_PROPERTY_SIZE, $propertyBinary);
             $name = str_replace("\x00", '', substr($propertyBinary, 0, $nameSize));
             $this->directoryProperties[] = [
-                'name' => $name,
-                'type' => $type,
+                'name'  => $name,
+                'type'  => $type,
                 'secId' => $secId,
-                'size' => $size,
+                'size'  => $size,
             ];
 
             $position += self::DIRECTORY_PROPERTY_LENGTH;
@@ -235,7 +203,8 @@ class OLEReader
     /**
      * Get stream by sector id.
      *
-     * @param int $secId
+     * @param  int  $secId
+     *
      * @return string
      */
     private function getStreamData(int $secId): string
@@ -251,27 +220,43 @@ class OLEReader
     }
 
     /**
-     * Get short stream by sector id.
+     * Get workbook stream.
      *
-     * @param int $secId
-     * @param string $sourceData
      * @return string
      */
-    private function getShortStreamData(int $secId, string $sourceData): string
+    public function getWorkbook(): string
     {
-        $data = '';
-        while ($secId != -2) {
-            $position = $secId * $this->shortSectorSize;
-            $data .= substr($sourceData, $position, $this->shortSectorSize);
-            $secId = $this->shortSectorChains[$secId];
+        if (is_null($this->workbook)) {
+            $this->workbook = $this->getStreamByName('WORKBOOK');
         }
-        return $data;
+
+        return $this->workbook;
+    }
+
+    /**
+     * Get stream by name.
+     *
+     * @param  string  $name
+     *
+     * @return string
+     */
+    public function getStreamByName(string $name): string
+    {
+        $streamProperty = $this->getDirectoryPropertyByName($name);
+        if (($streamProperty['size'] < $this->standardStreamMinSize)) {
+            $rootEntryProperty = $this->getDirectoryPropertyByName('ROOT ENTRY');
+            $rootEntryStreamData = $this->getStreamData($rootEntryProperty['secId']);
+            return $this->getShortStreamData($streamProperty['secId'], $rootEntryStreamData);
+        }
+
+        return $this->getStreamData($streamProperty['secId']);
     }
 
     /**
      * Get directory property by name.
      *
-     * @param string $name
+     * @param  string  $name
+     *
      * @return array
      */
     private function getDirectoryPropertyByName(string $name): array
@@ -284,5 +269,24 @@ class OLEReader
                     || (strtolower($directoryProperty['name']) == 'book' && $name == 'workbook');
             }
         ));
+    }
+
+    /**
+     * Get short stream by sector id.
+     *
+     * @param  int     $secId
+     * @param  string  $sourceData
+     *
+     * @return string
+     */
+    private function getShortStreamData(int $secId, string $sourceData): string
+    {
+        $data = '';
+        while ($secId != -2) {
+            $position = $secId * $this->shortSectorSize;
+            $data .= substr($sourceData, $position, $this->shortSectorSize);
+            $secId = $this->shortSectorChains[$secId];
+        }
+        return $data;
     }
 }

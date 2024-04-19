@@ -9,8 +9,9 @@ interface WriterRowInterface
     /**
      * Write rows.
      *
-     * @param array $rows
-     * @param \EasyExcel\Metadata\Style|null $style
+     * @param  array                           $rows
+     * @param  \EasyExcel\Metadata\Style|null  $style
+     *
      * @return void
      */
     public function writes(array $rows, ?Style $style = null): void;

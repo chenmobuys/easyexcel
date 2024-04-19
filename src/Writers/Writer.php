@@ -35,6 +35,13 @@ abstract class Writer extends Excel implements WriterInterface
     }
 
     /**
+     * @param  string  $filename
+     *
+     * @return $this
+     */
+    abstract protected function openFromFile(string $filename): WriterInterface;
+
+    /**
      * Determine whether the file is writeable.
      *
      * @param  string  $filename
@@ -67,12 +74,6 @@ abstract class Writer extends Excel implements WriterInterface
         return $this;
     }
 
-    public function addRows(array $rows, ?Style $style = null): WriterInterface
-    {
-        $this->getRowWriter()->writes($rows, $style);
-        return $this;
-    }
-
     protected function getRowWriter(): WriterRowInterface
     {
         $sheet = $this->getActiveSheet();
@@ -80,6 +81,19 @@ abstract class Writer extends Excel implements WriterInterface
             $this->rowWriters[$sheet->getIndex()] = $this->getRowWriterBySheet($sheet);
         }
         return $this->rowWriters[$sheet->getIndex()];
+    }
+
+    /**
+     * @param  SheetInterface  $sheet
+     *
+     * @return WriterRowInterface
+     */
+    abstract protected function getRowWriterBySheet(SheetInterface $sheet): WriterRowInterface;
+
+    public function addRows(array $rows, ?Style $style = null): WriterInterface
+    {
+        $this->getRowWriter()->writes($rows, $style);
+        return $this;
     }
 
     /**
@@ -94,20 +108,6 @@ abstract class Writer extends Excel implements WriterInterface
             $this->closed = true;
         }
     }
-
-    /**
-     * @param  string  $filename
-     *
-     * @return $this
-     */
-    abstract protected function openFromFile(string $filename): WriterInterface;
-
-    /**
-     * @param  SheetInterface  $sheet
-     *
-     * @return WriterRowInterface
-     */
-    abstract protected function getRowWriterBySheet(SheetInterface $sheet): WriterRowInterface;
 
     /**
      * Close writer.

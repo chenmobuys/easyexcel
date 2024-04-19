@@ -14,7 +14,8 @@ class DocPropsCorePart extends Part
     protected function writeStart(): parent
     {
         $this->xml->startElement('cp:coreProperties');
-        $this->xml->writeAttribute('xmlns:cp', 'http://schemas.openxmlformats.org/package/2006/metadata/core-properties');
+        $this->xml->writeAttribute('xmlns:cp',
+            'http://schemas.openxmlformats.org/package/2006/metadata/core-properties');
         $this->xml->writeAttribute('xmlns:dc', 'http://purl.org/dc/elements/1.1/');
         $this->xml->writeAttribute('xmlns:dcterms', 'http://purl.org/dc/terms/');
         $this->xml->writeAttribute('xmlns:dcmitype', 'http://purl.org/dc/dcmitype/');

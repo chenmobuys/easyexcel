@@ -25,6 +25,7 @@ interface SheetInterface
      * Set sheet name.
      *
      * @param  string  $name
+     *
      * @return $this
      */
     public function setName(string $name): SheetInterface;
@@ -40,6 +41,7 @@ interface SheetInterface
      * Set sheet index.
      *
      * @param  int  $index
+     *
      * @return $this
      */
     public function setIndex(int $index): SheetInterface;
@@ -55,6 +57,7 @@ interface SheetInterface
      * Set total rows.
      *
      * @param  int  $totalRows
+     *
      * @return $this
      */
     public function setTotalRows(int $totalRows): SheetInterface;
@@ -70,6 +73,7 @@ interface SheetInterface
      * Set total columns.
      *
      * @param  int  $totalColumns
+     *
      * @return $this
      */
     public function setTotalColumns(int $totalColumns): SheetInterface;
@@ -99,6 +103,7 @@ interface SheetInterface
      * Set auto filter.
      *
      * @param  ?\EasyExcel\Metadata\AutoFilter  $autoFilter
+     *
      * @return $this
      */
     public function setAutoFilter(?AutoFilter $autoFilter = null): SheetInterface;
@@ -107,6 +112,7 @@ interface SheetInterface
      * Get hyperlink.
      *
      * @param  string  $coordinate
+     *
      * @return \EasyExcel\Metadata\Hyperlink|null
      */
     public function getHyperlink(string $coordinate): ?Hyperlink;
@@ -114,8 +120,9 @@ interface SheetInterface
     /**
      * Set hyperlink.
      *
-     * @param  string  $coordinate
+     * @param  string                              $coordinate
      * @param  \EasyExcel\Metadata\Hyperlink|null  $hyperlink
+     *
      * @return $this
      */
     public function setHyperlink(string $coordinate, ?Hyperlink $hyperlink): SheetInterface;
@@ -123,6 +130,7 @@ interface SheetInterface
 
     /**
      * @param  string  $coordinate
+     *
      * @return bool
      */
     public function hasHyperlink(string $coordinate): bool;
@@ -145,6 +153,7 @@ interface SheetInterface
      * Get merge cell.
      *
      * @param  string  $coordinate
+     *
      * @return string|null
      */
     public function getMergeCell(string $coordinate): ?string;
@@ -152,8 +161,9 @@ interface SheetInterface
     /**
      * Set merge cell.
      *
-     * @param  string  $coordinate
+     * @param  string       $coordinate
      * @param  string|null  $mergeCell
+     *
      * @return $this
      */
     public function setMergeCell(string $coordinate, ?string $mergeCell): SheetInterface;
@@ -169,6 +179,7 @@ interface SheetInterface
      * Set merge cells.
      *
      * @param  array  $mergeCells
+     *
      * @return $this;
      */
     public function setMergeCells(array $mergeCells): SheetInterface;

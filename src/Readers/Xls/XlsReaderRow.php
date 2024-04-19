@@ -29,13 +29,13 @@ class XlsReaderRow extends ReaderRow
     protected $rowOffsets = [];
 
     /**
-     * @param  string  $handler
-     * @param  string  $codepage
-     * @param  int  $version
-     * @param  array  $rowOffsets
+     * @param  string          $handler
+     * @param  string          $codepage
+     * @param  int             $version
+     * @param  array           $rowOffsets
      * @param  SheetInterface  $sheet
-     * @param  int  $startRow
-     * @param  int|null  $endRow
+     * @param  int             $startRow
+     * @param  int|null        $endRow
      */
     public function __construct(
         string $handler,

@@ -17,7 +17,7 @@ class ErrorCode
     /**
      * Map error code, e.g. '#N/A'.
      *
-     * @param int $code
+     * @param  int  $code
      *
      * @return string|null
      */

@@ -98,6 +98,26 @@ class OdsReader extends Reader
     }
 
     /**
+     * Get XMLReader from name.
+     *
+     * @param  string       $name
+     * @param  string|null  $filename
+     *
+     * @return \XMLReader
+     */
+    private static function getXMLReaderFromName(string $name, string $filename = null): XMLReader
+    {
+        $xmlReader = new XMLReader();
+        $xmlReader->open(
+            'zip://'.$filename.'#'.$name,
+            null,
+            Settings::getLibXmlLoaderOptions()
+        );
+
+        return $xmlReader;
+    }
+
+    /**
      * @param  SheetInterface  $sheet
      * @param  int             $startRow
      * @param  int|null        $endRow
@@ -197,26 +217,6 @@ class OdsReader extends Reader
         $xml->close();
 
         return $this;
-    }
-
-    /**
-     * Get XMLReader from name.
-     *
-     * @param  string  $name
-     * @param  string|null  $filename
-     *
-     * @return \XMLReader
-     */
-    private static function getXMLReaderFromName(string $name, string $filename = null): XMLReader
-    {
-        $xmlReader = new XMLReader();
-        $xmlReader->open(
-            'zip://'.$filename.'#'.$name,
-            null,
-            Settings::getLibXmlLoaderOptions()
-        );
-
-        return $xmlReader;
     }
 
     /**

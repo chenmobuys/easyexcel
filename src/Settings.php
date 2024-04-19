@@ -29,7 +29,8 @@ class Settings
     }
 
     /**
-     * @param string $tempDir
+     * @param  string  $tempDir
+     *
      * @return void
      */
     public static function setTempDir(string $tempDir): void
@@ -54,7 +55,7 @@ class Settings
     /**
      * Set default options for libxml loader.
      *
-     * @param ?int $options Default options for libxml loader
+     * @param ?int  $options  Default options for libxml loader
      */
     public static function setLibXmlLoaderOptions(?int $options = null): void
     {

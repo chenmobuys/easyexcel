@@ -22,10 +22,10 @@ class XlsxReaderRow extends ReaderRow
     protected $xml;
 
     /**
-     * @param  string  $handler
+     * @param  string          $handler
      * @param  SheetInterface  $sheet
-     * @param  int  $startRow
-     * @param  int|null  $endRow
+     * @param  int             $startRow
+     * @param  int|null        $endRow
      */
     public function __construct(string $handler, SheetInterface $sheet, int $startRow = 1, int $endRow = null)
     {

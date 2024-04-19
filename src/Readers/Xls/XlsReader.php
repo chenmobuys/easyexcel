@@ -212,6 +212,7 @@ class XlsReader extends Reader
      * Determine whether the file is readable.
      *
      * @param  string  $filename
+     *
      * @return bool
      */
     public static function readable(string $filename): bool
@@ -222,12 +223,16 @@ class XlsReader extends Reader
 
     /**
      * @param  SheetInterface  $sheet
-     * @param  int  $startRow
-     * @param  int|null  $endRow
+     * @param  int             $startRow
+     * @param  int|null        $endRow
+     *
      * @return ReaderRowInterface
      */
-    protected function getRowIteratorBySheet(SheetInterface $sheet, int $startRow = 1, int $endRow = null): ReaderRowInterface
-    {
+    protected function getRowIteratorBySheet(
+        SheetInterface $sheet,
+        int $startRow = 1,
+        int $endRow = null
+    ): ReaderRowInterface {
         $rowOffsets = $this->rowOffsets[$sheet->getIndex()] ?? [];
 
         return new XlsReaderRow(
@@ -238,6 +243,7 @@ class XlsReader extends Reader
 
     /**
      * @param  string  $filename
+     *
      * @return $this
      */
     protected function loadFromFile(string $filename): ReaderInterface

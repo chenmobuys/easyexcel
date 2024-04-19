@@ -19,23 +19,23 @@ class ContentTypesPart extends Part
      */
     protected $overrideElements = [
         [
-            'PartName' => '/docProps/app.xml',
+            'PartName'    => '/docProps/app.xml',
             'ContentType' => 'application/vnd.openxmlformats-officedocument.extended-properties+xml',
         ],
         [
-            'PartName' => '/docProps/core.xml',
+            'PartName'    => '/docProps/core.xml',
             'ContentType' => 'application/vnd.openxmlformats-package.core-properties+xml',
         ],
         [
-            'PartName' => '/xl/styles.xml',
+            'PartName'    => '/xl/styles.xml',
             'ContentType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml',
         ],
         [
-            'PartName' => '/xl/sharedStrings.xml',
+            'PartName'    => '/xl/sharedStrings.xml',
             'ContentType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml',
         ],
         [
-            'PartName' => '/xl/workbook.xml',
+            'PartName'    => '/xl/workbook.xml',
             'ContentType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml',
         ],
     ];
@@ -69,6 +69,21 @@ class ContentTypesPart extends Part
     }
 
     /**
+     * Get override sheet attributes.
+     *
+     * @param  int  $index
+     *
+     * @return string[]
+     */
+    private function getOverrideSheetAttributes(int $index): array
+    {
+        return [
+            'PartName'    => '/xl/worksheets/sheet'.($index + 1).'.xml',
+            'ContentType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml',
+        ];
+    }
+
+    /**
      * Write end.
      *
      * @return $this
@@ -78,19 +93,5 @@ class ContentTypesPart extends Part
         $this->xml->endElement();
 
         return $this;
-    }
-
-    /**
-     * Get override sheet attributes.
-     *
-     * @param int $index
-     * @return string[]
-     */
-    private function getOverrideSheetAttributes(int $index): array
-    {
-        return [
-            'PartName' => '/xl/worksheets/sheet' . ($index + 1) . '.xml',
-            'ContentType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml',
-        ];
     }
 }

@@ -42,7 +42,8 @@ class Excel implements ExcelInterface
      * Add cellXf.
      *
      * @param  \EasyExcel\Metadata\Style  $style
-     * @param  int|null  $index
+     * @param  int|null                   $index
+     *
      * @return $this
      */
     public function addCellXf(Style $style, int $index = null): ExcelInterface
@@ -57,9 +58,20 @@ class Excel implements ExcelInterface
     }
 
     /**
+     * Get cellXfs count.
+     *
+     * @return int
+     */
+    public function getCellXfsCount(): int
+    {
+        return count($this->cellXfs);
+    }
+
+    /**
      * Get cellXf.
      *
      * @param  int  $index
+     *
      * @return \EasyExcel\Metadata\Style|null
      */
     public function getCellXf(int $index): ?Style
@@ -71,6 +83,7 @@ class Excel implements ExcelInterface
      * Get cellXf.
      *
      * @param  string  $hashCode
+     *
      * @return \EasyExcel\Metadata\Style|null
      */
     public function getCellXfByHashCode(string $hashCode): ?Style
@@ -94,20 +107,11 @@ class Excel implements ExcelInterface
     }
 
     /**
-     * Get cellXfs count.
-     *
-     * @return int
-     */
-    public function getCellXfsCount(): int
-    {
-        return count($this->cellXfs);
-    }
-
-    /**
      * Add shared string.
      *
-     * @param  string  $string
+     * @param  string    $string
      * @param  int|null  $index
+     *
      * @return $this
      */
     public function addSharedString(string $string, ?int $index = null): ExcelInterface
@@ -125,6 +129,7 @@ class Excel implements ExcelInterface
      * Get shared string by index.
      *
      * @param  int  $index
+     *
      * @return string|null
      */
     public function getSharedString(int $index): ?string
@@ -157,9 +162,32 @@ class Excel implements ExcelInterface
         return !is_null($this->getSheetByName($sheetName));
     }
 
+    public function getSheetByName(string $sheetName, bool $createIfNotExists = false): ?SheetInterface
+    {
+        $sheet = current(array_filter(
+            $this->sheets,
+            function (SheetInterface $sheet) use ($sheetName) {
+                return $sheet->getName() == $sheetName;
+            }
+        )) ?: null;
+
+        if ($createIfNotExists) {
+            $sheetIndex = count($this->sheets);
+            $this->sheets[] = new Sheet($sheetName, $sheetIndex, $this);
+            return $this->sheets[count($this->sheets) - 1];
+        }
+
+        return $sheet;
+    }
+
     public function hasSheetIndex(int $sheetIndex): bool
     {
         return !is_null($this->getSheetByIndex($sheetIndex));
+    }
+
+    public function getSheetByIndex(int $sheetIndex): ?SheetInterface
+    {
+        return $this->sheets[$sheetIndex] ?? null;
     }
 
     public function getActiveSheet(): ?SheetInterface
@@ -190,29 +218,6 @@ class Excel implements ExcelInterface
     public function getAllSheets(): array
     {
         return $this->sheets;
-    }
-
-    public function getSheetByName(string $sheetName, bool $createIfNotExists = false): ?SheetInterface
-    {
-        $sheet = current(array_filter(
-            $this->sheets,
-            function (SheetInterface $sheet) use ($sheetName) {
-                return $sheet->getName() == $sheetName;
-            }
-        )) ?: null;
-
-        if ($createIfNotExists) {
-            $sheetIndex = count($this->sheets);
-            $this->sheets[] = new Sheet($sheetName, $sheetIndex, $this);
-            return $this->sheets[count($this->sheets) - 1];
-        }
-
-        return $sheet;
-    }
-
-    public function getSheetByIndex(int $sheetIndex): ?SheetInterface
-    {
-        return $this->sheets[$sheetIndex] ?? null;
     }
 
     public function removeSheetByName(string $sheetName): ExcelInterface

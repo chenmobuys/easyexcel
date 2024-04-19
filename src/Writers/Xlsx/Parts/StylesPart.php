@@ -271,8 +271,9 @@ class StylesPart extends Part
     }
 
     /**
-     * @param \EasyExcel\Metadata\Style\Border $border
-     * @param $name
+     * @param  \EasyExcel\Metadata\Style\Border  $border
+     * @param                                    $name
+     *
      * @return void
      */
     protected function writeBorderPr(Border $border, $name)
@@ -312,16 +313,22 @@ class StylesPart extends Part
             if ($cellXf->getQuotePrefix()) {
                 $this->xml->writeAttribute('quotePrefix', 1);
             }
-            $this->xml->writeAttribute('numFmtId', (int) $this->numFmtIndexes[$cellXf->getFormat()->getHashCode()] + 164);
+            $this->xml->writeAttribute('numFmtId',
+                (int) $this->numFmtIndexes[$cellXf->getFormat()->getHashCode()] + 164);
             $this->xml->writeAttribute('fontId', (int) $this->fontIndexes[$cellXf->getFont()->getHashCode()]);
             $this->xml->writeAttribute('fillId', (int) $this->fillIndexes[$cellXf->getFill()->getHashCode()]);
             $this->xml->writeAttribute('borderId', (int) $this->borderIndexes[$cellXf->getBorders()->getHashCode()]);
 
-            $this->xml->writeAttribute('applyNumberFormat', $defaultStyle->getFormat()->getHashCode() != $cellXf->getFormat()->getHashCode() ? '1' : '0');
-            $this->xml->writeAttribute('applyFont', $defaultStyle->getFont()->getHashCode() != $cellXf->getFont()->getHashCode() ? '1' : '0');
-            $this->xml->writeAttribute('applyFill', $defaultStyle->getFill()->getHashCode() != $cellXf->getFill()->getHashCode() ? '1' : '0');
-            $this->xml->writeAttribute('applyBorder', $defaultStyle->getBorders()->getHashCode() != $cellXf->getBorders()->getHashCode() ? '1' : '0');
-            $this->xml->writeAttribute('applyAlignment', $defaultStyle->getAlignment()->getHashCode() != $cellXf->getAlignment()->getHashCode() ? '1' : '0');
+            $this->xml->writeAttribute('applyNumberFormat',
+                $defaultStyle->getFormat()->getHashCode() != $cellXf->getFormat()->getHashCode() ? '1' : '0');
+            $this->xml->writeAttribute('applyFont',
+                $defaultStyle->getFont()->getHashCode() != $cellXf->getFont()->getHashCode() ? '1' : '0');
+            $this->xml->writeAttribute('applyFill',
+                $defaultStyle->getFill()->getHashCode() != $cellXf->getFill()->getHashCode() ? '1' : '0');
+            $this->xml->writeAttribute('applyBorder',
+                $defaultStyle->getBorders()->getHashCode() != $cellXf->getBorders()->getHashCode() ? '1' : '0');
+            $this->xml->writeAttribute('applyAlignment',
+                $defaultStyle->getAlignment()->getHashCode() != $cellXf->getAlignment()->getHashCode() ? '1' : '0');
             if ($cellXf->getProtection()->getLocked() != Protection::PROTECTION_INHERIT || $cellXf->getProtection()->getHidden() != Protection::PROTECTION_INHERIT) {
                 $this->xml->writeAttribute('applyProtection', 'true');
             }
@@ -351,10 +358,12 @@ class StylesPart extends Part
             if ($cellXf->getProtection()->getLocked() != Protection::PROTECTION_INHERIT || $cellXf->getProtection()->getHidden() != Protection::PROTECTION_INHERIT) {
                 $this->xml->startElement('protection');
                 if ($cellXf->getProtection()->getLocked() != Protection::PROTECTION_INHERIT) {
-                    $this->xml->writeAttribute('locked', (int) $cellXf->getProtection()->getLocked() == Protection::PROTECTION_PROTECTED);
+                    $this->xml->writeAttribute('locked',
+                        (int) $cellXf->getProtection()->getLocked() == Protection::PROTECTION_PROTECTED);
                 }
                 if ($cellXf->getProtection()->getHidden() != Protection::PROTECTION_INHERIT) {
-                    $this->xml->writeAttribute('hidden', (int) $cellXf->getProtection()->getHidden() == Protection::PROTECTION_PROTECTED);
+                    $this->xml->writeAttribute('hidden',
+                        (int) $cellXf->getProtection()->getHidden() == Protection::PROTECTION_PROTECTED);
                 }
                 $this->xml->endElement();
             }

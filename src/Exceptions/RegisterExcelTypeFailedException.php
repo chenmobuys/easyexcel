@@ -16,9 +16,9 @@ class RegisterExcelTypeFailedException extends EasyExcelException
     /**
      * Constructor.
      *
-     * @param string $className
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param  string           $className
+     * @param  int              $code
+     * @param  \Throwable|null  $previous
      */
     public function __construct(string $className, int $code = 0, Throwable $previous = null)
     {

@@ -27,6 +27,7 @@ class XlsxWriter extends Writer
 
     /**
      * @param  SheetInterface  $sheet
+     *
      * @return WriterRowInterface
      */
     public function getRowWriterBySheet(SheetInterface $sheet): WriterRowInterface
@@ -37,6 +38,7 @@ class XlsxWriter extends Writer
 
     /**
      * @param  SheetInterface  $sheet
+     *
      * @return SheetPart
      */
     protected function getHandlerByWriterSheet(SheetInterface $sheet): SheetPart
@@ -50,6 +52,7 @@ class XlsxWriter extends Writer
 
     /**
      * @param  string  $filename
+     *
      * @return $this
      */
     protected function openFromFile(string $filename): WriterInterface

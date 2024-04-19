@@ -66,6 +66,26 @@ class CsvReader extends Reader
     protected $flags = SplFileObject::READ_CSV | SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY;
 
     /**
+     * Determine whether the file is readable.
+     *
+     * @param  string  $filename
+     *
+     * @return bool
+     */
+    public static function readable(string $filename): bool
+    {
+        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        if (in_array($extension, ['csv', 'tsv'])) {
+            return true;
+        }
+
+        $mimeType = @mime_content_type($filename);
+        $supportTypes = ['application/csv', 'text/csv', 'text/plain', 'inode/x-empty', 'application/x-empty'];
+
+        return in_array($mimeType, $supportTypes);
+    }
+
+    /**
      * Get file encoding.
      *
      * @return string
@@ -79,6 +99,7 @@ class CsvReader extends Reader
      * Set file encoding.
      *
      * @param  string  $encoding
+     *
      * @return $this
      */
     public function setEncoding(string $encoding): self
@@ -102,6 +123,7 @@ class CsvReader extends Reader
      * Set SplFileObject flags.
      *
      * @param  int  $flags
+     *
      * @return $this
      */
     public function setFlags(int $flags): self
@@ -112,59 +134,17 @@ class CsvReader extends Reader
     }
 
     /**
-     * Set SplFileObject csv control.
-     *
-     * @param  string  $separator
-     * @param  string  $enclosure
-     * @param  string  $escape
-     * @return $this
-     */
-    public function setCsvControl(string $separator, string $enclosure, string $escape): self
-    {
-        $this->separator = $separator;
-        $this->enclosure = $enclosure;
-        $this->escape = $escape;
-
-        return $this;
-    }
-
-    /**
-     * Get SplFileObject csv control.
-     *
-     * @return array
-     */
-    public function getCsvControl(): array
-    {
-        return [$this->separator, $this->enclosure, $this->escape];
-    }
-
-    /**
-     * Determine whether the file is readable.
-     *
-     * @param  string  $filename
-     * @return bool
-     */
-    public static function readable(string $filename): bool
-    {
-        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        if (in_array($extension, ['csv', 'tsv'])) {
-            return true;
-        }
-
-        $mimeType = @mime_content_type($filename);
-        $supportTypes = ['application/csv', 'text/csv', 'text/plain', 'inode/x-empty', 'application/x-empty'];
-
-        return in_array($mimeType, $supportTypes);
-    }
-
-    /**
      * @param  SheetInterface  $sheet
-     * @param  int  $startRow
-     * @param  int|null  $endRow
+     * @param  int             $startRow
+     * @param  int|null        $endRow
+     *
      * @return ReaderRowInterface
      */
-    protected function getRowIteratorBySheet(SheetInterface $sheet, int $startRow = 1, int $endRow = null): ReaderRowInterface
-    {
+    protected function getRowIteratorBySheet(
+        SheetInterface $sheet,
+        int $startRow = 1,
+        int $endRow = null
+    ): ReaderRowInterface {
         return new CsvReaderRow($this->handler, $this->encoding, $sheet, $startRow, $endRow);
     }
 
@@ -172,6 +152,7 @@ class CsvReader extends Reader
      * Load from file.
      *
      * @param  string  $filename
+     *
      * @return $this
      */
     protected function loadFromFile(string $filename): ReaderInterface
@@ -214,13 +195,14 @@ class CsvReader extends Reader
      * Guess file encoding.
      *
      * @param  string  $filename
+     *
      * @return string
      */
     protected function guessEncoding(string $filename): string
     {
         $first4 = file_get_contents($filename, false, null, 0, 4);
         $bomEncodingList = [
-            self::UTF8_BOM    => 'UTF-8',
+            self::UTF8_BOM => 'UTF-8',
             self::UTF16BE_BOM => 'UTF-16BE',
             self::UTF32BE_BOM => 'UTF-32BE',
             self::UTF32LE_BOM => 'UTF-32LE',
@@ -251,6 +233,34 @@ class CsvReader extends Reader
         }
 
         return self::DEFAULT_ENCODING;
+    }
+
+    /**
+     * Set SplFileObject csv control.
+     *
+     * @param  string  $separator
+     * @param  string  $enclosure
+     * @param  string  $escape
+     *
+     * @return $this
+     */
+    public function setCsvControl(string $separator, string $enclosure, string $escape): self
+    {
+        $this->separator = $separator;
+        $this->enclosure = $enclosure;
+        $this->escape = $escape;
+
+        return $this;
+    }
+
+    /**
+     * Get SplFileObject csv control.
+     *
+     * @return array
+     */
+    public function getCsvControl(): array
+    {
+        return [$this->separator, $this->enclosure, $this->escape];
     }
 
     /**

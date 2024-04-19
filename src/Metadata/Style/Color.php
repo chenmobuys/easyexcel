@@ -143,15 +143,15 @@ class Color
     public const BLACK = 'FF000000';
 
     private const INDEXED_COLORS = [
-        1 => 'FF000000', //  System Colour #1 - Black
-        2 => 'FFFFFFFF', //  System Colour #2 - White
-        3 => 'FFFF0000', //  System Colour #3 - Red
-        4 => 'FF00FF00', //  System Colour #4 - Green
-        5 => 'FF0000FF', //  System Colour #5 - Blue
-        6 => 'FFFFFF00', //  System Colour #6 - Yellow
-        7 => 'FFFF00FF', //  System Colour #7- Magenta
-        8 => 'FF00FFFF', //  System Colour #8- Cyan
-        9 => 'FF800000', //  Standard Colour #9
+        1  => 'FF000000', //  System Colour #1 - Black
+        2  => 'FFFFFFFF', //  System Colour #2 - White
+        3  => 'FFFF0000', //  System Colour #3 - Red
+        4  => 'FF00FF00', //  System Colour #4 - Green
+        5  => 'FF0000FF', //  System Colour #5 - Blue
+        6  => 'FFFFFF00', //  System Colour #6 - Yellow
+        7  => 'FFFF00FF', //  System Colour #7- Magenta
+        8  => 'FF00FFFF', //  System Colour #8- Cyan
+        9  => 'FF800000', //  Standard Colour #9
         10 => 'FF008000', //  Standard Colour #10
         11 => 'FF000080', //  Standard Colour #11
         12 => 'FF808000', //  Standard Colour #12
@@ -215,7 +215,8 @@ class Color
     /**
      * Constructor.
      *
-     * @param string $colorValue
+     * @param  string  $colorValue
+     *
      * @see \EasyExcel\Metadata\Style\Color
      */
     public function __construct(string $colorValue = Color::BLACK)
@@ -226,8 +227,8 @@ class Color
     /**
      * Adjust the brightness of a color.
      *
-     * @param string $hex The colour as an RGBA or RGB value (e.g. FF00CCCC or CCDDEE)
-     * @param float $adjustPercentage The percentage by which to adjust the colour as a float from -1 to 1
+     * @param  string  $hex               The colour as an RGBA or RGB value (e.g. FF00CCCC or CCDDEE)
+     * @param  float   $adjustPercentage  The percentage by which to adjust the colour as a float from -1 to 1
      *
      * @return string The adjusted colour as an RGBA or RGB value (e.g. FF00CCCC or CCDDEE)
      */
@@ -265,19 +266,19 @@ class Color
         }
 
         $rgb = strtoupper(
-            str_pad(dechex((int) $red), 2, '0', 0) .
-            str_pad(dechex((int) $green), 2, '0', 0) .
+            str_pad(dechex((int) $red), 2, '0', 0).
+            str_pad(dechex((int) $green), 2, '0', 0).
             str_pad(dechex((int) $blue), 2, '0', 0)
         );
 
-        return (($rgba) ? 'FF' : '') . $rgb;
+        return (($rgba) ? 'FF' : '').$rgb;
     }
 
     /**
      * Get the red colour component of an RGB value.
      *
-     * @param string $RGB The colour as an RGB value (e.g. FF00CCCC or CCDDEE
-     * @param bool $hex Flag indicating whether the component should be returned as a hex or a
+     * @param  string  $RGB               The colour as an RGB value (e.g. FF00CCCC or CCDDEE
+     * @param  bool    $hex               Flag indicating whether the component should be returned as a hex or a
      *                                    decimal value
      *
      * @return string The red colour component
@@ -290,9 +291,9 @@ class Color
     /**
      * Get a specified colour component of an RGB value.
      *
-     * @param string $RGB The colour as an RGB value (e.g. FF00CCCC or CCDDEE
-     * @param int $offset Position within the RGB value to extract
-     * @param bool $hex Flag indicating whether the component should be returned as a hex or a
+     * @param  string  $RGB               The colour as an RGB value (e.g. FF00CCCC or CCDDEE
+     * @param  int     $offset            Position within the RGB value to extract
+     * @param  bool    $hex               Flag indicating whether the component should be returned as a hex or a
      *                                    decimal value
      *
      * @return string The extracted colour component
@@ -307,8 +308,8 @@ class Color
     /**
      * Get the green colour component of an RGB value.
      *
-     * @param string $RGB The colour as an RGB value (e.g. FF00CCCC or CCDDEE
-     * @param bool $hex Flag indicating whether the component should be returned as a hex or a
+     * @param  string  $RGB               The colour as an RGB value (e.g. FF00CCCC or CCDDEE
+     * @param  bool    $hex               Flag indicating whether the component should be returned as a hex or a
      *                                    decimal value
      *
      * @return string The green colour component
@@ -321,8 +322,8 @@ class Color
     /**
      * Get the blue colour component of an RGB value.
      *
-     * @param string $RGB The colour as an RGB value (e.g. FF00CCCC or CCDDEE
-     * @param bool $hex Flag indicating whether the component should be returned as a hex or a
+     * @param  string  $RGB               The colour as an RGB value (e.g. FF00CCCC or CCDDEE
+     * @param  bool    $hex               Flag indicating whether the component should be returned as a hex or a
      *                                    decimal value
      *
      * @return string The blue colour component
@@ -333,9 +334,10 @@ class Color
     }
 
     /**
-     * @param int $colorIndex
-     * @param bool $background
-     * @param array|null $palette
+     * @param  int         $colorIndex
+     * @param  bool        $background
+     * @param  array|null  $palette
+     *
      * @return \EasyExcel\Metadata\Style\Color
      */
     public static function indexedColor(int $colorIndex, bool $background = false, ?array $palette = null): Color
@@ -352,7 +354,8 @@ class Color
     }
 
     /**
-     * @param string $colorValue
+     * @param  string  $colorValue
+     *
      * @return $this
      */
     public function setRgb(string $colorValue): self
@@ -373,30 +376,31 @@ class Color
     /**
      * @return string
      */
+    public function getHashCode(): string
+    {
+        return md5(
+            __CLASS__.
+            $this->getArgb()
+        );
+    }
+
+    /**
+     * @return string
+     */
     public function getArgb(): string
     {
         return $this->argb ?? '';
     }
 
     /**
-     * @param string $colorValue
+     * @param  string  $colorValue
+     *
      * @return $this
      */
     public function setArgb(string $colorValue): self
     {
-        $this->argb = strlen($colorValue) === 8 ? $colorValue : ('FF' . $colorValue);
+        $this->argb = strlen($colorValue) === 8 ? $colorValue : ('FF'.$colorValue);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHashCode(): string
-    {
-        return md5(
-            __CLASS__ .
-            $this->getArgb()
-        );
     }
 }

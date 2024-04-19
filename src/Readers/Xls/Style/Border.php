@@ -24,7 +24,8 @@ class Border
     ];
 
     /**
-     * @param int $index
+     * @param  int  $index
+     *
      * @return string
      */
     public static function indexedBorder(int $index): string

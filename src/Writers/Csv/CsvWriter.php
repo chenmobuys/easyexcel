@@ -23,6 +23,7 @@ class CsvWriter extends Writer
 
     /**
      * @param  SheetInterface  $sheet
+     *
      * @return WriterRowInterface
      */
     public function getRowWriterBySheet(SheetInterface $sheet): WriterRowInterface
@@ -32,6 +33,7 @@ class CsvWriter extends Writer
 
     /**
      * @param  string  $filename
+     *
      * @return $this
      */
     protected function openFromFile(string $filename): WriterInterface

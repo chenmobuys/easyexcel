@@ -16,7 +16,8 @@ class DocPropsAppPart extends Part
         $sheetCount = count($this->excel->getAllSheets());
 
         $this->xml->startElement('Properties');
-        $this->xml->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/officeDocument/2006/extended-properties');
+        $this->xml->writeAttribute('xmlns',
+            'http://schemas.openxmlformats.org/officeDocument/2006/extended-properties');
         $this->xml->writeAttribute('xmlns:vt', 'http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes');
 
         // Application
