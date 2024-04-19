@@ -1,8 +1,8 @@
 # EasyExcel
 
 [![Build Status](https://github.com/chenmobuys/easyexcel/workflows/master/badge.svg)](https://github.com/chenmobuys/easyexcel/actions)
-[![License](https://img.shields.io/packagist/l/chen/easyexcel)](https://packagist.org/packages/chen/easyexcel)
-[![Platform Support](https://img.shields.io/packagist/php-v/chen/easyexcel)](https://github.com/chenmobuys/easyexcel)
+[![License](https://img.shields.io/packagist/l/chenmobuys/easyexcel)](https://packagist.org/packages/chenmobuys/easyexcel)
+[![Platform Support](https://img.shields.io/packagist/php-v/chenmobuys/easyexcel)](https://github.com/chenmobuys/easyexcel)
 
 ## 简介 Summary
 
