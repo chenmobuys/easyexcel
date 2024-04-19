@@ -81,7 +81,7 @@ class Style
      * @param  string  $index
      * @return $this
      */
-    public function setIndex(string $index): static
+    public function setIndex(string $index): Style
     {
         $this->index = $index;
 
@@ -100,7 +100,7 @@ class Style
      * @param  \EasyExcel\Metadata\Style\Font  $font
      * @return $this
      */
-    public function setFont(Font $font): static
+    public function setFont(Font $font): Style
     {
         $this->font = $font;
 
@@ -119,7 +119,7 @@ class Style
      * @param  \EasyExcel\Metadata\Style\Fill  $fill
      * @return $this
      */
-    public function setFill(Fill $fill): static
+    public function setFill(Fill $fill): Style
     {
         $this->fill = $fill;
 
@@ -138,7 +138,7 @@ class Style
      * @param  \EasyExcel\Metadata\Style\Format  $format
      * @return $this
      */
-    public function setFormat(Format $format): static
+    public function setFormat(Format $format): Style
     {
         $this->format = $format;
 
@@ -157,7 +157,7 @@ class Style
      * @param  \EasyExcel\Metadata\Style\Borders  $borders
      * @return $this
      */
-    public function setBorders(Borders $borders): static
+    public function setBorders(Borders $borders): Style
     {
         $this->borders = $borders;
 
@@ -177,7 +177,7 @@ class Style
      * @param  \EasyExcel\Metadata\Style\Alignment  $alignment
      * @return $this
      */
-    public function setAlignment(Alignment $alignment): static
+    public function setAlignment(Alignment $alignment): Style
     {
         $this->alignment = $alignment;
 
@@ -196,7 +196,7 @@ class Style
      * @param  \EasyExcel\Metadata\Style\Protection  $protection
      * @return $this
      */
-    public function setProtection(Protection $protection): static
+    public function setProtection(Protection $protection): Style
     {
         $this->protection = $protection;
 
@@ -215,7 +215,7 @@ class Style
      * @param  bool  $quotePrefix
      * @return $this
      */
-    public function setQuotePrefix(bool $quotePrefix): static
+    public function setQuotePrefix(bool $quotePrefix): Style
     {
         $this->quotePrefix = $quotePrefix;
 

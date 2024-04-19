@@ -3,6 +3,7 @@
 namespace EasyExcel\Readers\Xlsx;
 
 use EasyExcel\Helpers\Coordinate;
+use EasyExcel\Interfaces\ReaderInterface;
 use EasyExcel\Interfaces\ReaderRowInterface;
 use EasyExcel\Interfaces\SheetInterface;
 use EasyExcel\Metadata\AutoFilter;
@@ -185,7 +186,7 @@ class XlsxReader extends Reader
      * @return $this
      * @throws \Exception
      */
-    protected function loadFromFile(string $filename): static
+    protected function loadFromFile(string $filename): ReaderInterface
     {
         $this->zip = new ZipArchive();
         $this->zip->open($filename);

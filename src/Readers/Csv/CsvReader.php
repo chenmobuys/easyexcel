@@ -3,6 +3,7 @@
 namespace EasyExcel\Readers\Csv;
 
 use EasyExcel\Helpers\Encoding;
+use EasyExcel\Interfaces\ReaderInterface;
 use EasyExcel\Interfaces\ReaderRowInterface;
 use EasyExcel\Interfaces\SheetInterface;
 use EasyExcel\Readers\Reader;
@@ -173,7 +174,7 @@ class CsvReader extends Reader
      * @param  string  $filename
      * @return $this
      */
-    protected function loadFromFile(string $filename): static
+    protected function loadFromFile(string $filename): ReaderInterface
     {
         if (!$this->encoding) {
             $this->encoding = $this->guessEncoding($filename);

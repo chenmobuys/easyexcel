@@ -3,6 +3,7 @@
 namespace EasyExcel\Readers\Ods;
 
 use EasyExcel\Helpers\Coordinate;
+use EasyExcel\Interfaces\ReaderInterface;
 use EasyExcel\Interfaces\ReaderRowInterface;
 use EasyExcel\Interfaces\SheetInterface;
 use EasyExcel\Metadata\Hyperlink;
@@ -118,7 +119,7 @@ class OdsReader extends Reader
      *
      * @return $this
      */
-    protected function loadFromFile(string $filename): static
+    protected function loadFromFile(string $filename): ReaderInterface
     {
         $this->zip = $zip = new ZipArchive();
         $zip->open($filename);

@@ -5,6 +5,7 @@ namespace EasyExcel\Readers\Xls;
 use EasyExcel\Helpers\CodePage;
 use EasyExcel\Helpers\Coordinate;
 use EasyExcel\Helpers\Encoding;
+use EasyExcel\Interfaces\ReaderInterface;
 use EasyExcel\Interfaces\ReaderRowInterface;
 use EasyExcel\Interfaces\SheetInterface;
 use EasyExcel\Metadata\Style;
@@ -239,7 +240,7 @@ class XlsReader extends Reader
      * @param  string  $filename
      * @return $this
      */
-    protected function loadFromFile(string $filename): static
+    protected function loadFromFile(string $filename): ReaderInterface
     {
         $this->OLEReader = new OLEReader($filename);
         $this->workbook = $this->OLEReader->getWorkbook();
