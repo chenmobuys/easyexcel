@@ -60,9 +60,10 @@ class ReaderTest extends TestCase
     public function test_read(string $filename)
     {
         $reader = Factory::load($filename);
-        $actualRows = array_map(function ($item) {
-            return $item->toArray();
-        }, iterator_to_array($reader->getRowIterator()));
+        $actualRows = [];
+        foreach ($reader->getRowIterator() as $row) {
+            $actualRows[] = $row->toArray();
+        }
         $expectedRows = [
             ['Title1', 'Title2', 'Title3'],
             ['Desc1', 'Desc2', 'Desc3'],

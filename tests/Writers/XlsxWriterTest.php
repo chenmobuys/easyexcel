@@ -14,9 +14,10 @@ class XlsxWriterTest extends TestCase
         $writer->addRow([1, 2, 3])
             ->close();
         $reader = Factory::load($filename);
-        $actualRows = array_map(function ($item) {
-            return $item->toArray();
-        }, iterator_to_array($reader->getRowIterator()));
+        $actualRows = [];
+        foreach ($reader->getRowIterator() as $row) {
+            $actualRows[] = $row->toArray();
+        }
         $this->assertEquals([[1, 2, 3]], $actualRows);
         @unlink($filename);
     }
