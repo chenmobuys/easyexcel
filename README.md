@@ -1,8 +1,14 @@
 # EasyExcel
 
-使用低内存读取、写入大电子表格，支持格式 CSV、ODS、XLS、XLSX。
+[![Build Status](https://github.com/chenmobuys/easyexcel/workflows/master/badge.svg)](https://github.com/chenmobuys/easyexcel/actions)
+[![License](https://img.shields.io/packagist/l/chen/easyexcel)](https://packagist.org/packages/chen/easyexcel)
+[![Platform Support](https://img.shields.io/packagist/php-v/chen/easyexcel)](https://github.com/chenmobuys/easyexcel)
 
-Read and write large spreadsheets using low memory, supporting formats CSV, ODS, XLS, XLSX.
+## 简介 Summary
+
+使用 3MB 左右的低内存读取、写入大电子表格，支持格式 CSV、ODS、XLS、XLSX。
+
+Use low memory of around 3MB to read and write large spreadsheets, supporting formats CSV, ODS, XLS, and XLSX.
 
 ## 环境要求 Environment
 
@@ -57,6 +63,8 @@ $writer->addRow(["Foo", "Bar"], $style)->close();
 
 * https://github.com/mk-j/PHP_XLSXWriter
 * https://github.com/nuovo/spreadsheet-reader
+* https://github.com/box/spout
+* https://github.com/PHPOffice/PhpSpreadsheet
 
 [//]: # (## 已实现功能)
 
