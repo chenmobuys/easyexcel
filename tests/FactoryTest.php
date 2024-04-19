@@ -70,9 +70,9 @@ class FactoryTest extends TestCase
     {
         $this->expectException(UnknownExcelTypeException::class);
         try {
-            Factory::createReaderForFile("tests/data/sample.bar");
+            Factory::createReaderForFile("tests/data/sample.zip");
         } catch (UnknownExcelTypeException $e) {
-            $this->assertEquals("tests/data/sample.bar", $e->getFilename());
+            $this->assertEquals("tests/data/sample.zip", $e->getFilename());
             throw $e;
         }
     }
