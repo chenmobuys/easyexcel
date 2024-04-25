@@ -2,7 +2,7 @@
   "name": "chenmobuys/easyexcel",
   "type": "library",
   "license": "MIT",
-  "description": "Easy excel library for php.",
+  "description": "Easy spreadsheet library for php.",
   "keywords": [
     "php",
     "office",
