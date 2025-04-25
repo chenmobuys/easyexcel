@@ -169,6 +169,10 @@ final class Factory
 
         if ($guessedExcelType) {
             $writer = self::createWriter($guessedExcelType);
+            $dirname = dirname($filename);
+            if (!is_dir($dirname)) {
+                mkdir($dirname);
+            }
             if ($writer->writeable($filename)) {
                 return $writer;
             }
