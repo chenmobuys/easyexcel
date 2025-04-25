@@ -1,0 +1,7 @@
+.idea
+vendor
+tests/coverage
+tests/data/temp
+composer.lock
+.phpunit.result.cache*
+.DS_Store

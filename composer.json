@@ -1,0 +1,71 @@
+{
+    "name": "chenmobuys/easyexcel",
+    "type": "library",
+    "version": "1.0",
+    "license": "MIT",
+    "description": "Easy excel library.",
+    "keywords": [
+        "php",
+        "office",
+        "msexcel",
+        "phpexcel",
+        "excel",
+        "sheet",
+        "worksheet",
+        "spreadsheet",
+        "reader",
+        "writer",
+        "csv",
+        "ods",
+        "xls",
+        "xlsx"
+    ],
+    "authors": [
+        {
+            "name": "Chenmobuys",
+            "email": "chenmobuys@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "EasyExcel\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EasyExcelTests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "phpunit"
+        ],
+        "coverage": [
+            "phpunit --coverage-html ./tests/coverage"
+        ],
+        "post-autoload-dump": [
+            "EasyExcel\\Composer::postAutoloadDump"
+        ],
+        "post-update-cmd": [
+            "EasyExcel\\Composer::postUpdateCmd"
+        ],
+        "post-install-cmd": [
+            "EasyExcel\\Composer::postInstallCmd"
+        ]
+    },
+    "require": {
+        "php": "^7.1||^8.0",
+        "ext-xml": "*",
+        "ext-zip": "*",
+        "ext-iconv": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-fileinfo": "*",
+        "ext-simplexml": "*",
+        "ext-xmlreader": "*",
+        "ext-xmlwriter": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7||^6.5||^7.5||^8.5||^9.5"
+    }
+}

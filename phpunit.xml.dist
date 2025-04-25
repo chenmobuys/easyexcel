@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+        backupGlobals="true"
+        colors="true"
+        cacheResultFile=".phpunit.result.cache.json"
+>
+    <php>
+        <ini name="memory_limit" value="50M"/>
+    </php>
+    <testsuite name="Excel Feature Test Suite">
+        <directory>./tests</directory>
+    </testsuite>
+    <coverage>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">tests</directory>
+            <directory>vendor</directory>
+        </exclude>
+    </coverage>
+</phpunit>
