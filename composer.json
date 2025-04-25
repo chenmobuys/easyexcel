@@ -1,7 +1,6 @@
 {
     "name": "chenmobuys/easyexcel",
     "type": "library",
-    "version": "1.0",
     "license": "MIT",
     "description": "Easy excel library.",
     "keywords": [
